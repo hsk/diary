@@ -6,6 +6,9 @@
 $arr = glob("*.md");
 rsort($arr);
 
+echo $arr[0];
+echo "\n\n----\n";
+
 foreach($arr as $f) {
   if($f == "README.md") continue;
 ?>
