@@ -79,6 +79,12 @@ githubなら検索しやすい。他の技術者も見つけやすいかもし�
 最新の日付の物はPHPにして、ソースコードはincludeすると楽とかあるかもしれないけどまぁ、いいっしょ。
 ってことで。
 
+何が嫌かというと例えば、 scala taplでググると、
+
+https://www.google.co.jp/webhp?sourceid=chrome-instant&ion=1&espv=2&es_th=1&ie=UTF-8#q=scala%20tapl&es_th=1
+
+な感じで、自分のブログが大量に上に出てくるのが嫌なわけです。
+
 
 
 ----
