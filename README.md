@@ -2,6 +2,114 @@
 
 ひっそりと日記を書きたいので、ここに書く。
 
+# 2015/9/30 (水)
+
+## Scalaに多相型のHM型推論を移植した。
+
+少し色々な型推論について作ってみようという事で、type-systemのOCamlのソースを、Scalaに移植してみています。
+パーサめんどくさってなってたのですが、ウォーミングアップメニューを作って、面倒くさい気分を吹き飛ばして頑張った訳です。
+ということで、無事クリアして移植出来ました。[algorithm w](https://github.com/hsk/type-systems-scala/tree/master/algorithm_w)
+
+次に、レコードがある[extensible rows](https://github.com/hsk/type-systems-scala/tree/master/extensible_rows)
+についても移植しました。レコードの拡張は元のアルゴリズムWのdiffをみてかなり楽に出来ました。
+
+その次が、ATSに近づくための[refined type](https://github.com/hsk/type-systems-scala/tree/master/refined_types)です。これはかなりデカく、アルゴリズムWとの違いが多かったので大分苦労しました。
+でもなんとか移植終わりました。
+
+## 大きいプロジェクトの進め方について
+
+比較的小さいプロジェクトの場合は一気に気力で終わらせる事が出来ます。
+でも、ある一定量を超えると苦しくなってしまいます。そういう場合は、ハマりポイントでずっとハマってると時間がドンドン経って行きます。
+それでは時間が勿体ないので、ハマってイライラしたら、とりあえず、別の作業をしてました。
+
+- OCaml -> Scalaの移植
+    - 別のソースを全体的に進める
+    - コンパイルは置いておいて、OCamlの字面をScalaに近付ける
+    - コンパイルを通す
+    - パーサの移植
+        - 字面上の移植
+        - 型を合わせる
+        - 初期化エラーを消す
+    - テストの移植
+        - 字面上の移植
+        - 初期化エラーを消す
+        - テストを通す
+- 英文の翻訳
+    - 複数ファイルを眺める
+        - google翻訳を張り付ける
+        - よりそれっぽくする
+
+翻訳はまだ終わってませんけど、スパイラル的に進める事で徐々に理解して行く事が出来てます。
+最後のほうになって来ると、頭を使わない作業が無くなってくるので、理解しつつ、きっちり動くようにするのが大変でストレスが溜まる。
+ストレス溜まりすぎると進めたくても進められないので、他の事を考えたりツイッターしたりしてやる気アップする。
+焦って進まないと、やる気が落ちて行くので、焦らず少しずつ着実に進めて、疲れたら終わりにする。
+って感じで終わらせる事が出来ました。
+
+## Z3,SATソルバ、SMTソルバ
+
+SATソルバという物があります。SATは数独などをとくために使われる物で、論理命題を解くために用いられます。
+SATソルバは素晴しいのですが、数式の計算を仕様とすると、ペアノ数を使う事になったりしてしまうため遅くなってしまいます。
+ペアノ数はたとえば、0はZで1はS(Z)、2はS(S(Z))、3はS(S(S(Z)))で、10はS(S(S(S(S(S(S(S(S(S(Z))))))))))というような式として数を表します。
+6000だと、Sが6000個必要です。これでもかけ算や足し算を定義すれば、計算は出来ます。しかし、メモリを沢山食うし遅くなってしまいます。
+そこで、SMTソルバの登場です。SMTソルバは、数式をただの数として使う事が出来ます。6000はintで済むので数バイトで済み、数値計算での整合性を効率的に計算してくれるので高速です。SMTソルバを自作するのも良いのでしょうが、高速化するのは大変です。そこで様々な高速なSMTソルバが開発されています。
+Z3はMicroSoftが作った高速なSMTソルバです。Z3を使えば簡単に高速な依存型を実装出来る訳です。
+
+Z3は例えば、ATSやF*という言語で使われています。(ATSの勉強会でATSでZ3というソルバを使っているという事を教えて貰いました。)
+Z3をつかうには、SMTLIBという言語を使います。SMTLIB言語はS式でSMTソルバの問題を書く言語です。
+言語に依存型を組み込むには、パースした後、型推論を行います。その後、依存情報を計算するためのS式を生成してZ3を使って解きます。
+Z3はパイプを使ってS式でやり取りをする事で複数問題を１つのプロセスの呼び出しで行う事が出来ます。
+
+
+例えば以下のプログラムがあったとしましょう。
+
+
+```typescript
+function test(x : int if x > 3) : (z : int if z > 0) {
+  return x - 2
+}
+```
+
+xは型がintでかつ3より大きくなければならず、
+返り値の型はintでかつ0より大きくなります。
+これが正しいかどうかをチェックするためのsmtソルバの式は以下のようになります。
+
+```lisp
+(declare-const x Int)                   ; `x : int`の宣言
+(assert (>= (- x 1) 3))                 ; `x > 3` の評価
+(push)                                  ; 新しいスタックフレームのenter
+(assert (not (>= (- (- x 2) 1) 0)))     ; `z == x - 2`の時の`not (z > 0)`の評価
+(check-sat)                             ; 答えの取得
+(pop)                                   ; スタックフレームのexit
+```
+
+z3のコマンドは例えば
+
+```
+z3 -smt2 20150930.txt
+```
+
+のようにして使います。
+
+パイプを使う場合は
+
+```
+cat 20150930.txt | z3 -smt2 -in
+```
+
+あるいは
+
+```
+z3 -smt2 -in < 20150930.txt
+```
+
+のようにして使います。
+
+`-t:4` 等とすると、ms単位でタイムアウトを指定出来ます。俺のマシンでは、ほとんどの場合は4msで計算する事が出来たので、非常に高速です。
+(長い問題だけたまにエラーが出て悩んだらこのオプションが原因だった)
+
+ということで、とりあえず移植が終わったのでメモってみました。
+移植しただけではまだ、理解が足りないと思うので、この後はソースの中味をよく見て行こうと思います。
+
 # 2015/9/22 (火)
 
 ## パーサ作成ウォーミングアップメニュー
@@ -205,57 +313,57 @@ evalという関数を作って評価します。
 
 同じようにlambda計算も作ってみましょう。
 
-	package calc
+    package calc
 
-	sealed trait E
-	case class EVar(a:String) extends E
-	case class EInt(a:Int) extends E
-	case class ELam(a:String, b:E) extends E
-	case class EApp(a:E, b:E) extends E
-	case class ELet(a:String, b:E, c:E) extends E
-	case class EBin(a:E, op:String, b:E) extends E
+    sealed trait E
+    case class EVar(a:String) extends E
+    case class EInt(a:Int) extends E
+    case class ELam(a:String, b:E) extends E
+    case class EApp(a:E, b:E) extends E
+    case class ELet(a:String, b:E, c:E) extends E
+    case class EBin(a:E, op:String, b:E) extends E
 
-	import util.parsing.combinator._
+    import util.parsing.combinator._
 
-	object parse extends RegexParsers {
-	  override protected val whiteSpace = """((/\*(?:.|\r|\n)*?\*/)|//.*|\s+)+""".r
+    object parse extends RegexParsers {
+      override protected val whiteSpace = """((/\*(?:.|\r|\n)*?\*/)|//.*|\s+)+""".r
 
-	  val keywords = Set("let","in","fun")
-	  val int = """[0-9]+""".r ^^ { a => EInt(a.toInt) }
-	  val id = """[a-zA-Z_][a-zA-Z0-9_]*""".r ^? { case a if !keywords.contains(a) => a }
-	  def lam = ("fun" ~> rep1(id)) ~ ("->" ~> exp) ^^ {
-	    case a~b => a.foldRight(b) {(a,b)=>ELam(a, b)}
-	  }
-	  def let = ("let" ~> id) ~ ("=" ~> exp) ~ ("in" ~> exp) ^^ {
-	    case a~b~c => ELet(a, b, c)
-	  }
-	  def fact:Parser[E] = let | lam | int | id ^^ { EVar(_) } | "(" ~> exp <~ ")"
+      val keywords = Set("let","in","fun")
+      val int = """[0-9]+""".r ^^ { a => EInt(a.toInt) }
+      val id = """[a-zA-Z_][a-zA-Z0-9_]*""".r ^? { case a if !keywords.contains(a) => a }
+      def lam = ("fun" ~> rep1(id)) ~ ("->" ~> exp) ^^ {
+        case a~b => a.foldRight(b) {(a,b)=>ELam(a, b)}
+      }
+      def let = ("let" ~> id) ~ ("=" ~> exp) ~ ("in" ~> exp) ^^ {
+        case a~b~c => ELet(a, b, c)
+      }
+      def fact:Parser[E] = let | lam | int | id ^^ { EVar(_) } | "(" ~> exp <~ ")"
 
-	  def add = fact ~ rep(("+" | "-") ~ fact) ^^ { case a~b =>
-	    b.foldLeft(a) { case(a, op~b) => EBin(a, op, b) }
-	  }
-	  def mul = add ~ rep(("*" | "/") ~ add) ^^ { case a~b =>
-	    b.foldLeft(a) { case(a, op~b) => EBin(a, op, b) }
-	  }
+      def add = fact ~ rep(("+" | "-") ~ fact) ^^ { case a~b =>
+        b.foldLeft(a) { case(a, op~b) => EBin(a, op, b) }
+      }
+      def mul = add ~ rep(("*" | "/") ~ add) ^^ { case a~b =>
+        b.foldLeft(a) { case(a, op~b) => EBin(a, op, b) }
+      }
 
-	  def app = rep1(mul) ^^ { _.reduceLeft{EApp(_, _)} }
+      def app = rep1(mul) ^^ { _.reduceLeft{EApp(_, _)} }
 
-	  def exp:Parser[E] = app
+      def exp:Parser[E] = app
 
-	  def apply(p:Parser[E], s:String) = parseAll(p, s) match {
-	    case Success(t, _) => t
-	    case e => throw new Exception("" + e)
-	  }
-	  def apply(s:String):E = apply(exp, s)
-	}
+      def apply(p:Parser[E], s:String) = parseAll(p, s) match {
+        case Success(t, _) => t
+        case e => throw new Exception("" + e)
+      }
+      def apply(s:String):E = apply(exp, s)
+    }
 
-	object main extends App {
-	  println(parse(parse.int, "/*a*/123"))
-	  println(parse(parse.fact, "a"))
-	  println(parse(parse.fact, "123"))
-	  println(parse("let f = fun a -> a in f 10"))
-	  println(parse("(fun a b -> a + b) 1 2"))
-	}
+    object main extends App {
+      println(parse(parse.int, "/*a*/123"))
+      println(parse(parse.fact, "a"))
+      println(parse(parse.fact, "123"))
+      println(parse("let f = fun a -> a in f 10"))
+      println(parse("(fun a b -> a + b) 1 2"))
+    }
 
 
 ----

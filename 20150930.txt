@@ -1,0 +1,6 @@
+(declare-const x Int)                   ; `x : int`の宣言
+(assert (>= (- x 1) 3))                 ; `x > 3` の評価
+(push)                                  ; 新しいスタックフレームのenter
+(assert (not (>= (- (- x 2) 1) 0)))     ; `z == x - 2`の時の`not (z > 0)`の評価
+(check-sat)                             ; 答えの取得
+(pop)                                   ; スタックフレームのexit
