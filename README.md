@@ -2,6 +2,97 @@
 
 ひっそりと日記を書きたいので、ここに書く。
 
+# 2015/10/14
+
+## 単語表作成ツール on osx for markdown
+
+英語が読めない、よくよく考えると、圧倒的英単語力不足！
+twitterで単語帳があると良いというような話を目にする。
+そうだ、英単語表を作るのが面倒で嫌なのだ。macにはctrl+command+dで辞書を引く機能が付いている。
+しかし、圧倒的単語力不足な俺にとって辞書を引く回数はあまりにも多く、めんどくさくて仕方がない。
+そこで、command+cでコピーをすると、単語一覧に登録され、リターンキーを押すと、google翻訳が起動される。
+翻訳結果を修正し、コピーすると、コピーされた内容と単語一覧を元にMarkdownの表を作成してクリップボードに保存される。
+そんなツールをPHPで作って使ってみてます。とても便利です。
+以下、そのようなツールです。pbcopy,pbpaste,open等のコマンドラインのコマンドを使っているので、Windowsでは動かないと思いますが、
+Javaに移植する等すれば何処でも動くツールに出来るかもしれません。
+
+```
+#!/usr/local/bin/php
+<?php
+
+function non_block_read($fd, &$data) {
+    $read = array($fd);
+    $write = array();
+    $except = array();
+    $result = stream_select($read, $write, $except, 0);
+    if($result === false) throw new Exception('stream_select failed');
+    if($result === 0) return false;
+    $data = stream_get_line($fd, 1);
+    return true;
+}
+function keywait() {
+    $x = "";
+    return !(non_block_read(STDIN, $x));
+}
+
+`echo "" | pbcopy`;
+
+$LOG="";
+$PREV=`pbpaste`;
+while(keywait()){
+	$DATA=`pbpaste`;
+	if ($PREV != $DATA){
+		echo "$DATA\n";
+		$LOG = "$LOG$DATA\n";
+	}
+	$PREV=$DATA;
+	usleep(100000);
+}
+echo "open\n";
+$LOG2 = urlencode($LOG);
+shell_exec("open \"https://translate.google.co.jp/#en/ja/$LOG2\"");
+
+`echo "" | pbcopy`;
+
+while(`pbpaste` == "\n"){
+	usleep(100000);
+}
+
+$DATA = explode("\n",`pbpaste`);
+$LOG = explode("\n", rtrim($LOG,"\n"));
+
+ob_start();
+
+echo "|English|日本語|\n";
+echo "| --- | --- |\n";
+
+foreach($LOG as $i=>$l) {
+  echo "|$LOG[$i]|$DATA[$i]|\n"; 
+}
+
+$data = ob_get_contents();
+ob_end_clean();
+echo $data;
+
+$fp = popen("pbcopy","w");
+fwrite($fp, $data);
+fclose($fp);
+```
+
+# 2015/10/06
+
+## Z3で関数
+
+	z3 -smt2 -in
+	(define-fun add ((a Int) (b Int)) Int (+ a b))
+	(declare-const x Int)
+	(assert (= x (add 1 2)))
+	(check-sat)
+	sat
+	(get-value (x))
+	((x 3))
+	(exit)
+
 # 2015/10/05
 
 ## CoPLとTAPLの式だけ見る
