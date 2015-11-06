@@ -12,8 +12,8 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://hsk.github.io/diary/
-root: /
+url: http://hsk.github.io/blog/
+root: /blog/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
@@ -63,7 +63,11 @@ pagination_dir: page
 # Extensions
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
-theme: landscape
+#theme: air
+#theme: biture
+#theme: casper
+#theme: light
+theme: freemind
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
