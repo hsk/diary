@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" >
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+
+	<title>h_sakurai's diary</title>
+
+	<link rel="stylesheet" href="css/skyblue.css">
+
+	<link rel="stylesheet" href="demo/css/docs.css">
+	<link rel="stylesheet" href="demo/google-code-prettify/prettify.css">
+
+
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="demo/ie/htmlshiv.js"></script>
+		<script type="text/javascript" src="demo/ie/respond.src.js"></script>
+	<![endif]-->
+</head>
+<body onload="prettyPrint()">
+
+<div class="bg-dark padding-y-20">
+	<div class="container text-center">
+		<h1>h_sakurai's diary</h1>
+	</div>
+</div>
+<div class="container">
+		<div class="col md-3">
+			<div class="sidemenu js-sidemenu">
+				<h5>contents</h5>
+				<div>
+
+						<a href="index.html">index</a>
+							<a href="201511.html">201511</a>
+							<a href="201510.html">201510</a>
+							<a href="201509.html">201509</a>
+							<a href="201508.html">201508</a>
+					</div>
+				<p></p>
+				<h5>links</h5>
+				<div>
+					<a href="http://github.com/hsk/diary">github</a>
+				</div>
+			</div>
+		</div>
+		<div class="col md-9 float-right">
+			<h1 id="section">2015/8/22</h1>
+<p>ここの所やる気が出ないので、政治の事などを考えてみたりしてました。世界情勢を見ると産む人の量を減らすとよいなというのと、身分制度が人種差別や民族差別になり、こんどはお金持ちかどうかや、趣味やマナー等での差別が出来ていてそれが、中国人や韓国人が日本人を嫌う所の本質的な部分なのではないかなと思ったりしています。</p>
+<p>それは置いておいて、ふと、ExtLibの事を思い出して、色々考えてみたので文章に纏めてみたいと思います。</p>
+<h2 id="ocamlextlistscala">OCamlのExtListをScalaに応用する事を考えてみた。</h2>
+<h3>はじめに</h3>
+<p>ぼーっと、OCamlのa.(1)で配列アクセスとか面白いよなぁとか、参照がどうとか考えてて、<br />そういえばOCamlのリスト構築は参照使って構築して無理矢理キャストとかやってて速いとかあったなと思いだしました。<br />ExtLibというOCamlの高速な外部ライブラリがあります。このExtLibはフリーのActionScript2コンパイラのMTASCやHaxeのコンパイラ等で使われています。<br />MTASCやHaxeは高速なコンパイラとして知られています。Javaで実装されたActionScript3のコンパイラより起動も速く、コンパイル速度も速く感じます。<br />このExtLibが速い秘密は、例えば、ExtListを見ると、mutableなデータでリスト構築して置いてimmutableなconsにキャストすることで実現されています。</p>
+<p><a href="https://github.com/ygrek/ocaml-extlib/blob/master/src/extList.ml">https://github.com/ygrek/ocaml-extlib/blob/master/src/extList.ml</a></p>
+<pre><code>type &#39;a mut_list={
+  hd: &#39;a; 
+  mutable tl: &#39;a list
+}
+external inj : &#39;a mut_list -&gt; &#39;a list = &quot;%identity&quot;</code></pre>
+<p>mut_listはC言語で言うところの構造体で、inj関数がmut_listからlistへのキャストを行う関数のようなのです。</p>
+<p>これらのことをJVM上で動作する関数型言語のScalaで実現出来ないかと以前も考えた事があったのですが、コンパイル結果を見るくらいの所まで行ってやめていました。<br />この間、Scalaのソースを読もうとしてimplicit conversionが邪魔だなぁっと思ったり、またScalazって最終的に本当に速くなるのかなぁと思ったりしていました。</p>
+<p>多分そういう事があったので、ふと、型安全な、mutable immutableキャストみたいなのってある機能のある言語ってあるのかな？リストの構築はmutableなconsで作って、immutableにキャストするのだけど、型安全だというような。<br />更に拡張して、implicit conversionのような感じなのだけど、型が与えられるだけで、実体としては何も変わらずに、クラスを拡張したように見せかけるとか、出来たら嬉しいのかもなと思ったりしたのです。</p>
+<p>そこで、twitterで呟いてみたので、ブログのネタとして面白いなと思ったのでまとめてみる次第です。</p>
+<p>そこで、1. implicit conversionの新たな形としての型システムと、2. ScalaでExtLibを構築する場合の洞察 3. ステートモナドでExtLibを構築する場合の洞察の３点について考えてみたいと思います。</p>
+<h3 id="implicit-conversion">1. implicit conversionの新たな形としての型システム</h3>
+<p>Scalaの型検査あるいは型推論は、型エラーとなったところで型の変換テーブル上にある型変換をすれば型エラーを回避出来る場合にScalaでは暗黙的に型変換が行われます。<br />これをimplicit conversion(暗黙的型変換)と言います。<br />Scalaの暗黙的型変換を使うと、Javaのような静的なオブジェクト指向の型システム上で、Rubyのような動的な型システムのクラス拡張を実現する事が出来ます。<br />例えば、StringクラスにはないメソッドをStringクラスに追加したい場合はStringはWrappedStringに変換されます。元のStringはWrappedStringに含まれます。</p>
+<p><a href="https://github.com/scala/scala/blob/v2.11.7/src/library/scala/collection/immutable/WrappedString.scala">https://github.com/scala/scala/blob/v2.11.7/src/library/scala/collection/immutable/WrappedString.scala</a></p>
+<p>クラスを拡張する場合は、クラスを含んだクラスを作る事になる訳です。<br />また、implicit conversionはクラスに変換されてから、メソッド呼び出しを行われるため、型変換とラップされたクラスの２つがあるため呼び出し部分をソースを追う場合に一手間余計にかかります。<br />一手間減らすためにimplicit classがあるのかな？って調べてみるとそうでした。w<br />自分が望む物としてはimplicit classのstaticなバージョンなので、implicit objectみたいな物があれば、、、って調べてみると、implicit objectはimplicit parametorという、暗黙の引数のための引数として使われるようです。<br />Scalaの暗黙的型変換は非常に便利ですが、クラスを拡張する際に、もう一つ余計なクラスを作る事になり無駄なオーバーヘッドがあるように思う訳です。<br />仮に型情報のみで行って、クラス拡張のメソッド呼び出しは、実際は、staticな関数呼び出しをするような型システムがあれば、無駄なクラスを生成せずに同様の事が行えるはずです。</p>
+<p>&quot;abc&quot;.slice(0,2)は、WrappedString#slice(String, int, int)を呼ぶだけで済むのであれば高速かもしれません。</p>
+<p>直接クラスを拡張する構文があってそれによってメソッド呼び出しが関数呼び出しに変換されるだけならば、実行時には高速で、表示上も分かりやすく出来るのではないかと思います。</p>
+<p>とりあえず、実装</p>
+<h3 id="scalavaljvm">2. Scalaのvalの実装とJVM内でどのような最適化がなされるか</h3>
+<p>Scalaでも、immutableだけど書き換えてしまって後でキャストしてOKってやったら速く出来て、しかも型安全だったらいいなっていう。<br />これをScalaでやりたい<br />Haskellのモナド使って同じ事が出来たりするのかなとか。<br />consのtailがmutableである物を表す状態モナドを作って、それの実体はゴニョゴニョ変換して最適化される事で同じになるぜっていう。<br />ふつうのScalaのconsの実装の場合は、privateな変数とpublicな関数で実装されてるので、難しいのかもと思ったのだけど、リフレクションうんたらでprivateな変数書き換えたりしてオラオラ！ってできるのかなぁっ<br />リフレクション使うとプライベートな変数を書き換えは可能なのだな。<br /><a href="http://www.takaiwa.net/2013/01/javaprivatefieldmethod.html">http://www.takaiwa.net/2013/01/javaprivatefieldmethod.html</a> …<br />速くなるのかだなぁ。<br />Listのmapをプライベート変数アクセスしてextlibのmapのような実装にして、速度見れば分かるのだろうなっと。<br />でも遅くなりそうw<br />JVMの実装が頑張ってくれれば速くなるのだろうなっとw</p>
+<h3 id="extlib">3. ステートモナドでExtLibを構築した場合にどのようなことをするとよいか</h3>
+<p>モナドを使った場合はどうかって言うのも作って速度を見て速ければ素晴しく、遅ければ最適化の余地がある。<br />extLibはHaxeのコンパイラでも使われている。Haxeのコンパイラはとても高速なのだけど、その秘密の１つであるっ<br />JVMで、privateなフィールドとpublicなメソッドだけで表したimmutableな変数は無限レジスタとして表されるようになっているのかも気になる。<br />varをvalにすると速くなるみたいなソースコードがあったりすると嬉しい気がする。<br />OCamlのExtListをScalaやHaskellで実現しているかを考える事で、より高速にする事が可能となるかもしれない。</p>
+<p>し</p>
+<h1 id="section-1">2015/8/17</h1>
+<h2>今やろうとしてること</h2>
+<ul>
+<li>[ ] ATSのコードフォーマッタを作る。<br /></li>
+<li>[ ] Prologを覚える。<br /></li>
+<li>[ ] Coqっぽい言語を作りたい。<br /></li>
+<li>[ ] TAPLの後半を読むぞ。</li>
+</ul>
+<p>ってところ。ATSのコードフォーマッタは、パーサコンビネータを書くといい感じにネストを付けてくれるような仕組みを作って、<br />ATSのパーサを作ってみてる所。Sublime Textで動かすことを念頭に、pythonで書いている。<br />コンパイルしなくても動くのでtry &amp; errorでの開発が楽でよい。<br />でも、スピードが遅いなと思うのが問題だ。</p>
+<p>emacsでも動かしたいとなったときを考えると、elisp版もつくらないと行けなくなりそうとか思ったのだけど、emacs的には<br />外部コマンド呼べるようにするのが良いんじゃね？みたいな話を見つけたので、ATSで最終的に動かせばATS速いし、ATSでなんでもできれば良いだろうと思う。<br />ということで詳しくは <a href="https://github.com/hsk/docs/tree/master/ats/beautify">https://github.com/hsk/docs/tree/master/ats/beautify</a> を参照ということでw</p>
+<p>prologを覚えようって思って、</p>
+<p><a href="https://github.com/hsk/docs/tree/master/prolog">https://github.com/hsk/docs/tree/master/prolog</a> にそれなりに関数型言語的にPrologを使ってみようって思ったのだけど、</p>
+<p><a href="http://qiita.com/mandel59/items/0111154e5dbeb537ec32">http://qiita.com/mandel59/items/0111154e5dbeb537ec32</a></p>
+<p>この辺に同じこと考えている人がやってたりしたので、ああそう思ったりするよなぁなどと思ったりしている。</p>
+<p>どうもローカルにこういう書き掛けが結構いっぱい溜まっていて勿体ないなと思ったりしてるのと、twitterで呟くとまとまらないのが困る。<br />まとまって、日記書くと邪魔になるとかあるのでこんな形がいいんじゃないのかなと思ったのでした。</p>
+<h2 id="git">日記をgitで書くことにしたぞ！</h2>
+<p>日記をここに書くことにする。<br />ニッチな話をググって検索すると、ダダだーっと出て来てしまって困る。叩かれたりもする。<br />だからといって、検索出来ないと困る。<br />日記として纏めておきたい。<br />他の技術者が検索しやすいと嬉しい。</p>
+<p>githubなら検索しやすい。他の技術者も見つけやすいかもしれないw</p>
+<p>そんなこんなで、githubで日記書こうと思ったのでした。</p>
+<p>やる気は無いので、Markdownで書いて、日付付きの20150817.mdのようなファイルを作って、ファイル一覧をphpで取り出して、<br />最新、１０件くらいをREADME.mdに直接張っとけば良いっしょ。位の気軽さで行こうと思います。</p>
+<p>毎月更新してけば良いか。</p>
+<h3 id="readme.php">README.php</h3>
+<pre><code># h_sakuraiの日記
+
+ひっそりと日記を書きたいので、ここに書く。
+
+&lt;?php
+$arr = glob(&quot;*.md&quot;);
+rsort($arr);
+
+echo file_get_contents($arr[1]);
+echo &quot;\n\n----\n&quot;;
+
+foreach($arr as $f) {
+  if($f == &quot;README.md&quot;) continue;
+?&gt;
+
+[&lt;?php echo $f ?&gt;](&lt;?php echo $f ?&gt;)
+&lt;?php } ?&gt;</code></pre>
+<h3 id="makefile">Makefile</h3>
+<pre><code>all:
+    php README.php &gt; README.md
+    git commit -a
+    git push</code></pre>
+<p>こんなファイルを作っておきます。<br />月ごとに１つのファイルにマークダウンでメモ書きを残して行きます。<br />201508.mdに何か書くと。</p>
+<p>で、</p>
+<pre><code>make</code></pre>
+<p>とすると、README.phpが動いて、README.mdが更新され、git commitされるのでコメント書いて、git pushは自動的に行われる。<br />便利？良くわからないですけど。<br />最新の日付の物はPHPにして、ソースコードはincludeすると楽とかあるかもしれないけどまぁ、いいっしょ。<br />ってことで。</p>
+<p>何が嫌かというと例えば、 scala taplでググると、</p>
+<p><a href="https://www.google.co.jp/webhp?sourceid=chrome-instant&amp;ion=1&amp;espv=2&amp;es_th=1&amp;ie=UTF-8#q=scala%20tapl&amp;es_th=1">https://www.google.co.jp/webhp?sourceid=chrome-instant&amp;ion=1&amp;espv=2&amp;es_th=1&amp;ie=UTF-8#q=scala%20tapl&amp;es_th=1</a></p>
+<p>な感じで、自分のブログが大量に上に出てくるのが嫌なわけです。</p>
+			
+		</div>
+
+</div>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="demo/js/jquery.sticky-kit.min.js"></script>
+<script src="demo/google-code-prettify/prettify.js"></script>
+<script src="demo/js/docs.js"></script>
+</body>
+</html>

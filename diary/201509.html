@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" >
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+
+	<title>h_sakurai's diary</title>
+
+	<link rel="stylesheet" href="css/skyblue.css">
+
+	<link rel="stylesheet" href="demo/css/docs.css">
+	<link rel="stylesheet" href="demo/google-code-prettify/prettify.css">
+
+
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="demo/ie/htmlshiv.js"></script>
+		<script type="text/javascript" src="demo/ie/respond.src.js"></script>
+	<![endif]-->
+</head>
+<body onload="prettyPrint()">
+
+<div class="bg-dark padding-y-20">
+	<div class="container text-center">
+		<h1>h_sakurai's diary</h1>
+	</div>
+</div>
+<div class="container">
+		<div class="col md-3">
+			<div class="sidemenu js-sidemenu">
+				<h5>contents</h5>
+				<div>
+
+						<a href="index.html">index</a>
+							<a href="201511.html">201511</a>
+							<a href="201510.html">201510</a>
+							<a href="201509.html">201509</a>
+							<a href="201508.html">201508</a>
+					</div>
+				<p></p>
+				<h5>links</h5>
+				<div>
+					<a href="http://github.com/hsk/diary">github</a>
+				</div>
+			</div>
+		</div>
+		<div class="col md-9 float-right">
+			<h1 id="section">2015/9/30</h1>
+<h2 id="scalahm">Scalaに多相型のHM型推論を移植した。</h2>
+<p>少し色々な型推論について作ってみようという事で、type-systemのOCamlのソースを、Scalaに移植してみています。<br />パーサめんどくさってなってたのですが、ウォーミングアップメニューを作って、面倒くさい気分を吹き飛ばして頑張った訳です。<br />ということで、無事クリアして移植出来ました。<a href="https://github.com/hsk/type-systems-scala/tree/master/algorithm_w">algorithm w</a></p>
+<p>次に、レコードがある<a href="https://github.com/hsk/type-systems-scala/tree/master/extensible_rows">extensible rows</a><br />についても移植しました。レコードの拡張は元のアルゴリズムWのdiffをみてかなり楽に出来ました。</p>
+<p>その次が、ATSに近づくための<a href="https://github.com/hsk/type-systems-scala/tree/master/refined_types">refined type</a>です。これはかなりデカく、アルゴリズムWとの違いが多かったので大分苦労しました。<br />でもなんとか移植終わりました。</p>
+<h2>大きいプロジェクトの進め方について</h2>
+<p>比較的小さいプロジェクトの場合は一気に気力で終わらせる事が出来ます。<br />でも、ある一定量を超えると苦しくなってしまいます。そういう場合は、ハマりポイントでずっとハマってると時間がドンドン経って行きます。<br />それでは時間が勿体ないので、ハマってイライラしたら、とりあえず、別の作業をしてました。</p>
+<ul>
+<li><p>OCaml -&gt; Scalaの移植</p>
+<ul>
+<li>別のソースを全体的に進める<br /></li>
+<li>コンパイルは置いておいて、OCamlの字面をScalaに近付ける<br /></li>
+<li>コンパイルを通す<br /></li>
+<li><p>パーサの移植</p>
+<ul>
+<li>字面上の移植<br /></li>
+<li>型を合わせる<br /></li>
+<li>初期化エラーを消す<br /></li>
+</ul></li>
+<li><p>テストの移植</p>
+<ul>
+<li>字面上の移植<br /></li>
+<li>初期化エラーを消す<br /></li>
+<li>テストを通す<br /></li>
+</ul></li>
+</ul></li>
+<li><p>英文の翻訳</p>
+<ul>
+<li><p>複数ファイルを眺める</p>
+<ul>
+<li>google翻訳を張り付ける<br /></li>
+<li>よりそれっぽくする</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>翻訳はまだ終わってませんけど、スパイラル的に進める事で徐々に理解して行く事が出来てます。<br />最後のほうになって来ると、頭を使わない作業が無くなってくるので、理解しつつ、きっちり動くようにするのが大変でストレスが溜まる。<br />ストレス溜まりすぎると進めたくても進められないので、他の事を考えたりツイッターしたりしてやる気アップする。<br />焦って進まないと、やる気が落ちて行くので、焦らず少しずつ着実に進めて、疲れたら終わりにする。<br />って感じで終わらせる事が出来ました。</p>
+<h2 id="z3satsmt">Z3,SATソルバ、SMTソルバ</h2>
+<p>SATソルバという物があります。SATは数独などをとくために使われる物で、論理命題を解くために用いられます。<br />SATソルバは素晴しいのですが、数式の計算を仕様とすると、ペアノ数を使う事になったりしてしまうため遅くなってしまいます。<br />ペアノ数はたとえば、0はZで1はS(Z)、2はS(S(Z))、3はS(S(S(Z)))で、10はS(S(S(S(S(S(S(S(S(S(Z))))))))))というような式として数を表します。<br />6000だと、Sが6000個必要です。これでもかけ算や足し算を定義すれば、計算は出来ます。しかし、メモリを沢山食うし遅くなってしまいます。<br />そこで、SMTソルバの登場です。SMTソルバは、数式をただの数として使う事が出来ます。6000はintで済むので数バイトで済み、数値計算での整合性を効率的に計算してくれるので高速です。SMTソルバを自作するのも良いのでしょうが、高速化するのは大変です。そこで様々な高速なSMTソルバが開発されています。<br />Z3はMicroSoftが作った高速なSMTソルバです。Z3を使えば簡単に高速な依存型を実装出来る訳です。</p>
+<p>Z3は例えば、ATSやF*という言語で使われています。(ATSの勉強会でATSでZ3というソルバを使っているという事を教えて貰いました。)<br />Z3をつかうには、SMTLIBという言語を使います。SMTLIB言語はS式でSMTソルバの問題を書く言語です。<br />言語に依存型を組み込むには、パースした後、型推論を行います。その後、依存情報を計算するためのS式を生成してZ3を使って解きます。<br />Z3はパイプを使ってS式でやり取りをする事で複数問題を１つのプロセスの呼び出しで行う事が出来ます。</p>
+<p>例えば以下のプログラムがあったとしましょう。</p>
+<pre class="typescript"><code>function test(x : int if x &gt; 3) : (z : int if z &gt; 0) {
+  return x - 2
+}</code></pre>
+<p>xは型がintでかつ3より大きくなければならず、<br />返り値の型はintでかつ0より大きくなります。<br />これが正しいかどうかをチェックするためのsmtソルバの式は以下のようになります。</p>
+<pre class="lisp"><code>(declare-const x Int)                   ; `x : int`の宣言
+(assert (&gt;= (- x 1) 3))                 ; `x &gt; 3` の評価
+(push)                                  ; 新しいスタックフレームのenter
+(assert (not (&gt;= (- (- x 2) 1) 0)))     ; `z == x - 2`の時の`not (z &gt; 0)`の評価
+(check-sat)                             ; 答えの取得
+(pop)                                   ; スタックフレームのexit</code></pre>
+<p>z3のコマンドは例えば</p>
+<pre><code>z3 -smt2 20150930.txt</code></pre>
+<p>のようにして使います。</p>
+<p>パイプを使う場合は</p>
+<pre><code>cat 20150930.txt | z3 -smt2 -in</code></pre>
+<p>あるいは</p>
+<pre><code>z3 -smt2 -in &lt; 20150930.txt</code></pre>
+<p>のようにして使います。</p>
+<p><code>-t:4</code> 等とすると、ms単位でタイムアウトを指定出来ます。俺のマシンでは、ほとんどの場合は4msで計算する事が出来たので、非常に高速です。<br />(長い問題だけたまにエラーが出て悩んだらこのオプションが原因だった)</p>
+<p>ということで、とりあえず移植が終わったのでメモってみました。<br />移植しただけではまだ、理解が足りないと思うので、この後はソースの中味をよく見て行こうと思います。</p>
+<h1 id="section-1">2015/9/22</h1>
+<h2>パーサ作成ウォーミングアップメニュー</h2>
+<p>ここのところ、パーサを書くのに飽き飽きしてしまってパーサ書くのが嫌で嫌で仕方なくなってしまいました。<br />パーサを作るのをやめて、パーサ作りを忘れてみても、いざパーサを作ろうとすると嫌な気持ちがよみがえってきます。<br />オーマイッガッ！どうしたらいいんだ！祈っても、世界平和の解決法を考えてみても、いっこうにパーサが嫌なままです。<br />フラッシュバックしているのを止めたい。薬は使いたくない。一体どういう事なんだ！！<br />鎌倉時代の武士は祈るだけでは駄目だといって、禅を始めたという。迷走をして心を落ち着け、掃除をし、素振りをした。<br />基本は大事である。おそらく武士もまた剣の道で心が折れたとき、スランプに陥った事であろう。<br />私もまた、パーサ作成スランプである。</p>
+<p>脳の事を考えると次のようなことが起こっているのではないだろうか。<br />脳内にはパーサを司る領域の記憶領域があるはずである。<br />脳がパーサの事を考えるとその思考のコンテキストにあわせて脳内のパーサ処理領域が呼び出される。<br />初期化ルーチンではCPUのコンテキストきりかえのように脳状態が記憶されていてそれが再生される。<br />パーサを作っていた時の記憶が嫌で嫌で仕方なくなっていると、思い出しただけで嫌になる。</p>
+<p>この長期記憶内のコンテキストを書き換える事が出来れば、スランプから脱出することができるであろう。</p>
+<p>このScalaでパーサ作成ウォーミングアップメニューはパーサ造の基本であり、素振りである。<br />パーサ作るのがめんどくさくなってたまらなくてスランプに陥った。<br />あるいは、パーサを自分で作ってみようとしてパーサ作成アレルギーのようになってしまった。<br />以下のメニューを何度もこなせば、パーサ作成は苦でなくなるであろう。</p>
+<h3>構文木を書く</h3>
+<p>まずは、構文木を作ります。</p>
+<pre><code>package calc
+sealed trait E
+case class EBin(a:E, op:String, b:E) extends E
+case class EInt(a:Int) extends E
+case class EVar(a:String) extends E
+
+object main extends App {
+  println(EBin(EInt(1),&quot;+&quot;,EVar(&quot;s&quot;))
+}</code></pre>
+<p>コマンドラインから、sbt等でテストすると楽でしょう。</p>
+<pre><code>$ sbt ~ run</code></pre>
+<p><code>EBin(EInt(1),&quot;+&quot;,EVar(&quot;s&quot;))</code>は<code>1+s</code>の式を表します。</p>
+<h3 id="int">int対応パーサを書く</h3>
+<p>次に、int用のパーサを作ってテストしてみます。ユーティル、パーシング、コンビネータのレジェックスパーサーズを使うのです。って頭で覚えなくても、これ見てコピペすればオッケーです。</p>
+<pre><code>import util.parsing.combinator._
+object parse extends RegexParsers {
+
+  def int = &quot;&quot;&quot;[0-9]+&quot;&quot;&quot;.r ^^ { a =&gt; EInt(a.toInt) }
+  def apply(parser:Parser[E], str:String) = parseAll(parser, str) match {
+    case Success(tree,_) =&gt; tree
+    case e =&gt; throw new Exception(&quot;&quot;+e)
+  }
+}
+
+object main extends App {
+  println(parse(parse.int, &quot;1&quot;))
+}</code></pre>
+<p>出来たら、変数用のパーサを作ってテストしてみます。</p>
+<h3>変数のパーサを書く</h3>
+<p>変数のパーサの名前はid等としましょう。</p>
+<pre><code>def id = &quot;[a-zA-Z_][a-zA-Z_0-9]*&quot;.r ^^ { EVar(_) }</code></pre>
+<p>メイン関数には以下を書いてテストします。</p>
+<pre><code>  println(parse(parse.id, &quot;a&quot;))</code></pre>
+<h3 id="int">変数とintをまとめて括弧も対応する</h3>
+<p>次に、factというパーサを、intとidと括弧に対応させたパーサを作りましょう。</p>
+<pre><code>def fact:Parser[E] = int | id | &quot;(&quot;~&gt;fact&lt;~&quot;)&quot;
+
+  println(parse(parse.fact, &quot;abc&quot;))
+  println(parse(parse.fact, &quot;123&quot;))
+  println(parse(parse.fact, &quot;(abc)&quot;))
+  println(parse(parse.fact, &quot;(123)&quot;))</code></pre>
+<p>これでいいはずです。</p>
+<h3>かけ算と割算に対応する。</h3>
+<p>mulという文法名でパーサを書いて</p>
+<pre><code>  def mul = fact ~ rep((&quot;*&quot; | &quot;/&quot;) ~ fact) ^^ {
+    case a ~ b =&gt; b.foldLeft(a) {
+      case (a, op ~ r) =&gt; EBin(a, op, r)
+    }
+  }</code></pre>
+<p>factの括弧の中味も書き換えましょう。</p>
+<pre><code>def fact:Parser[E] = int | id | &quot;(&quot;~&gt; mul &lt;~&quot;)&quot;</code></pre>
+<p>以下のようにテストしてみます。</p>
+<pre><code>  println(parse(parse.mul, &quot;2*2&quot;))
+  println(parse(parse.mul, &quot;2/3&quot;))</code></pre>
+<h3>足し算と引き算に対応する。</h3>
+<p>addという文法名でパーサ書いて</p>
+<pre><code>  def add = mul ~ rep((&quot;+&quot; | &quot;-&quot;) ~ mul) ^^ {
+    case a ~ b =&gt; b.foldLeft(a) {
+      case (a, op ~ r) =&gt; EBin(a, op, r)
+    }
+  }</code></pre>
+<p>factの括弧の中味も書き換えましょう。</p>
+<pre><code>def fact:Parser[E] = int | id | &quot;(&quot;~&gt; add &lt;~&quot;)&quot;</code></pre>
+<p>以下のようにテストします。</p>
+<pre><code>println(parse(parse.add, &quot;1+2+3&quot;))
+println(parse(parse.add, &quot;1*2-3/2&quot;))</code></pre>
+<p>factも書き換えましょう。</p>
+<h3>右再帰に対応してみましょう。</h3>
+<p>assignとexpを追加して、</p>
+<pre><code>  def assign = repsep(add, &quot;=&quot;) ^^ {
+    _.reduceRight[E] {
+      (a, b) =&gt; EBin(a, &quot;=&quot;, b)
+    }
+  }
+
+  def exp = repsep(assign, &quot;,&quot;) ^^ {
+    _.reduceRight[E] {
+      (a, b) =&gt; EBin(a, &quot;,&quot;, b)
+    }
+  }</code></pre>
+<p>factの括弧の中味も書き換えましょう。</p>
+<pre><code>  def fact:Parser[E] = int | id | &quot;(&quot;~&gt; add &lt;~&quot;)&quot;
+
+  def apply(str:String):E = apply(exp, str)</code></pre>
+<p>テストは</p>
+<pre><code>println(parse(parse.exp, &quot;a=1+2,b=2*3,a*b&quot;))</code></pre>
+<h3>評価器を作りましょう。</h3>
+<p>evalという関数を作って評価します。</p>
+<pre><code>  def eval(env:Map[String,Int], e:E):(Map[String,Int], Int) = {
+    e match {
+      case EInt(a) =&gt; (env,a)
+      case EVar(a) =&gt; (env,env(a))
+      case EBin(EVar(a), &quot;=&quot;, b) =&gt; 
+        val (env1, b1) = eval(env, b)
+        (env + (a-&gt;b1), b1)
+      case EBin(a, &quot;,&quot;, b) =&gt;
+        val (env1, a1) = eval(env, a)
+        eval(env1, b)
+      case EBin(a, op, b) =&gt;
+        val (env1, a1) = eval(env, a)
+        val (env2, b1) = eval(env, b)
+        op match {
+          case &quot;+&quot; =&gt; (env2, a1 + b1)
+          case &quot;-&quot; =&gt; (env2, a1 - b1)
+          case &quot;*&quot; =&gt; (env2, a1 * b1)
+          case &quot;/&quot; =&gt; (env2, a1 / b1)
+        }
+    }
+  }</code></pre>
+<p>実行のテストは以下のような感じで</p>
+<pre><code>var v = parse(parse.exp, &quot;a=1+2,b=2*3,a*b&quot;)
+println(v)
+println(eval(Map(), v))</code></pre>
+<p><code>1+2=3</code>で<code>2*3=6</code> <code>a=3</code>で<code>b=6</code>なので、<code>a*b</code>は18です。</p>
+<h3>まとめ</h3>
+<p>調子を崩したときに、是非お試しあれ。<br />テストと言いつつ、実行して結果は目で確認してますが、assertでテストするようにしたり、<br />しっかりテスティングフレームワークを使うと良いでしょう。</p>
+<h2 id="lambda">lambda計算</h2>
+<p>同じようにlambda計算も作ってみましょう。</p>
+<pre><code>package calc
+
+sealed trait E
+case class EVar(a:String) extends E
+case class EInt(a:Int) extends E
+case class ELam(a:String, b:E) extends E
+case class EApp(a:E, b:E) extends E
+case class ELet(a:String, b:E, c:E) extends E
+case class EBin(a:E, op:String, b:E) extends E
+
+import util.parsing.combinator._
+
+object parse extends RegexParsers {
+  override protected val whiteSpace = &quot;&quot;&quot;((/\*(?:.|\r|\n)*?\*/)|//.*|\s+)+&quot;&quot;&quot;.r
+
+  val keywords = Set(&quot;let&quot;,&quot;in&quot;,&quot;fun&quot;)
+  val int = &quot;&quot;&quot;[0-9]+&quot;&quot;&quot;.r ^^ { a =&gt; EInt(a.toInt) }
+  val id = &quot;&quot;&quot;[a-zA-Z_][a-zA-Z0-9_]*&quot;&quot;&quot;.r ^? { case a if !keywords.contains(a) =&gt; a }
+  def lam = (&quot;fun&quot; ~&gt; rep1(id)) ~ (&quot;-&gt;&quot; ~&gt; exp) ^^ {
+    case a~b =&gt; a.foldRight(b) {(a,b)=&gt;ELam(a, b)}
+  }
+  def let = (&quot;let&quot; ~&gt; id) ~ (&quot;=&quot; ~&gt; exp) ~ (&quot;in&quot; ~&gt; exp) ^^ {
+    case a~b~c =&gt; ELet(a, b, c)
+  }
+  def fact:Parser[E] = let | lam | int | id ^^ { EVar(_) } | &quot;(&quot; ~&gt; exp &lt;~ &quot;)&quot;
+
+  def add = fact ~ rep((&quot;+&quot; | &quot;-&quot;) ~ fact) ^^ { case a~b =&gt;
+    b.foldLeft(a) { case(a, op~b) =&gt; EBin(a, op, b) }
+  }
+  def mul = add ~ rep((&quot;*&quot; | &quot;/&quot;) ~ add) ^^ { case a~b =&gt;
+    b.foldLeft(a) { case(a, op~b) =&gt; EBin(a, op, b) }
+  }
+
+  def app = rep1(mul) ^^ { _.reduceLeft{EApp(_, _)} }
+
+  def exp:Parser[E] = app
+
+  def apply(p:Parser[E], s:String) = parseAll(p, s) match {
+    case Success(t, _) =&gt; t
+    case e =&gt; throw new Exception(&quot;&quot; + e)
+  }
+  def apply(s:String):E = apply(exp, s)
+}
+
+object main extends App {
+  println(parse(parse.int, &quot;/*a*/123&quot;))
+  println(parse(parse.fact, &quot;a&quot;))
+  println(parse(parse.fact, &quot;123&quot;))
+  println(parse(&quot;let f = fun a -&gt; a in f 10&quot;))
+  println(parse(&quot;(fun a b -&gt; a + b) 1 2&quot;))
+}</code></pre>
+			
+		</div>
+
+</div>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="demo/js/jquery.sticky-kit.min.js"></script>
+<script src="demo/google-code-prettify/prettify.js"></script>
+<script src="demo/js/docs.js"></script>
+</body>
+</html>

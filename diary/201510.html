@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" >
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+
+	<title>h_sakurai's diary</title>
+
+	<link rel="stylesheet" href="css/skyblue.css">
+
+	<link rel="stylesheet" href="demo/css/docs.css">
+	<link rel="stylesheet" href="demo/google-code-prettify/prettify.css">
+
+
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="demo/ie/htmlshiv.js"></script>
+		<script type="text/javascript" src="demo/ie/respond.src.js"></script>
+	<![endif]-->
+</head>
+<body onload="prettyPrint()">
+
+<div class="bg-dark padding-y-20">
+	<div class="container text-center">
+		<h1>h_sakurai's diary</h1>
+	</div>
+</div>
+<div class="container">
+		<div class="col md-3">
+			<div class="sidemenu js-sidemenu">
+				<h5>contents</h5>
+				<div>
+
+						<a href="index.html">index</a>
+							<a href="201511.html">201511</a>
+							<a href="201510.html">201510</a>
+							<a href="201509.html">201509</a>
+							<a href="201508.html">201508</a>
+					</div>
+				<p></p>
+				<h5>links</h5>
+				<div>
+					<a href="http://github.com/hsk/diary">github</a>
+				</div>
+			</div>
+		</div>
+		<div class="col md-9 float-right">
+			<h1 id="section">2015/10/16</h1>
+<h2>英語の学習について思う事</h2>
+<p>日本ではどうも、英語はお金をかけて覚える物になっている。<br />お金をかけて本を買い、お金をかけてスピードラーニングなどの教材を買う。<br />そうすれば覚えられるというような。でも多分、お金をかければ良いってものではない。</p>
+<p>このようなお金をかける構造では、英語を一生懸命勉強した人や、元々英語が使える国々の人だけが得をする。<br />日本語を勉強した人が日本に来て英語を教えて生計を立てるには、日本人は英語がわからないほうが良い。<br />英語が得意な人が先生として儲けるには、苦手な人は英語が喋らないほうが良い。<br />従って、先生達は出来るだけ下手な英語を喋らないように仕向ける。</p>
+<p>これは、教育ビジネスモデルとしてはよいが、日本がグローバルなビジネスをする上ではよろしくない。<br />英語は教育ビジネスのための存在を卒業して、商売道具として使う事で日本全体を豊かにする事が大事だ。</p>
+<p>このような構造は、他にも結構あると思う。<br />病院の経営を考えれば、完全に病気を治さないほうが儲かる。<br />プログラムは出来ない人がいるままにして本が売れる。</p>
+<p>いや、病気をなくして健康的な人を増やし、健康的な人が働いて儲ける事が国を豊かにする。<br />プログラムの能力が高い人を増やす事で、国を豊かにする。</p>
+<p>そういう事が必要なように思う。</p>
+<h1 id="section-1">2015/10/15</h1>
+<h2>英語訳する</h2>
+<p>今日はずっと、英語を勉強してました。<br />①昨日作ったツールをつかって、２ページの論文の知らない単語を全部調べておく。<br />②論文から英文をコピーして英単語を日本語に置き換えるだけ置き換える。<br />③順番を並び替える。<br />④google翻訳を参考に修正する。</p>
+<p>という感じでやってみてました。</p>
+<p>また、phpで問題を作って練習するツールも作ったりしました。<br />しかし、２ページで知らない単語が１００個以上ある等して、これは全部1日で覚えられないなって事になってしまいました。</p>
+<p>さらに、単語表が邪魔だなと思ってmarkdownで小さく表示する方法を調べて、</p>
+<pre><code>&lt;sup&gt;&lt;sub&gt;aaa&lt;/sub&gt;&lt;/sup&gt;</code></pre>
+<p>とすると１番小さく表示され</p>
+<pre><code>&gt; &lt;sup&gt;&lt;sub&gt;
+aaaa__
+bbb</code></pre>
+<p>と__の部分はスペースにすると改行になり、元の英文と、翻訳途中の文字列を引用で表示するようにしてみたりしてました。<br />単語一覧の仕様が変わってしまったのだけど、まぁ、明日以降便利なほうを残そうかと考えてます。</p>
+<p>本来やるべき事は、英文を翻訳してプログラムの動作を理解して、Scalaのプログラムのバグを取る事なんですけど、英語難しいし、<br />すぐに単語を覚えられる訳でもなく、翻訳能力も低いので、いろいろな文章を翻訳しまくって読みまくってみるのがよいのかな等と考えている次第です。</p>
+<p>今日翻訳してみてたのは以下のアドレスにあります:</p>
+<p><a href="https://github.com/hsk/type-systems-scala/blob/master/trans/subml.md">https://github.com/hsk/type-systems-scala/blob/master/trans/subml.md</a></p>
+<h1 id="section-2">2015/10/14</h1>
+<h2 id="-on-osx-for-markdown">単語表作成ツール on osx for markdown</h2>
+<p>英語が読めない、よくよく考えると、圧倒的英単語力不足！<br />twitterで単語帳があると良いというような話を目にする。<br />そうだ、英単語表を作るのが面倒で嫌なのだ。macにはctrl+command+dで辞書を引く機能が付いている。<br />しかし、圧倒的単語力不足な俺にとって辞書を引く回数はあまりにも多く、めんどくさくて仕方がない。<br />そこで、command+cでコピーをすると、単語一覧に登録され、リターンキーを押すと、google翻訳が起動される。<br />翻訳結果を修正し、コピーすると、コピーされた内容と単語一覧を元にMarkdownの表を作成してクリップボードに保存される。<br />そんなツールをPHPで作って使ってみてます。とても便利です。<br />以下、そのようなツールです。pbcopy,pbpaste,open等のコマンドラインのコマンドを使っているので、Windowsでは動かないと思いますが、<br />Javaに移植する等すれば何処でも動くツールに出来るかもしれません。</p>
+<pre><code>#!/usr/local/bin/php
+&lt;?php
+
+function non_block_read($fd, &amp;$data) {
+    $read = array($fd);
+    $write = array();
+    $except = array();
+    $result = stream_select($read, $write, $except, 0);
+    if($result === false) throw new Exception(&#39;stream_select failed&#39;);
+    if($result === 0) return false;
+    $data = stream_get_line($fd, 1);
+    return true;
+}
+function keywait() {
+    $x = &quot;&quot;;
+    return !(non_block_read(STDIN, $x));
+}
+
+`echo &quot;&quot; | pbcopy`;
+
+$LOG=&quot;&quot;;
+$PREV=`pbpaste`;
+while(keywait()){
+    $DATA=`pbpaste`;
+    if ($PREV != $DATA){
+        echo &quot;$DATA\n&quot;;
+        $LOG = &quot;$LOG$DATA\n&quot;;
+    }
+    $PREV=$DATA;
+    usleep(100000);
+}
+echo &quot;open\n&quot;;
+$LOG2 = urlencode($LOG);
+shell_exec(&quot;open \&quot;https://translate.google.co.jp/#en/ja/$LOG2\&quot;&quot;);
+
+`echo &quot;&quot; | pbcopy`;
+
+while(`pbpaste` == &quot;\n&quot;){
+    usleep(100000);
+}
+
+$DATA = explode(&quot;\n&quot;,`pbpaste`);
+$LOG = explode(&quot;\n&quot;, rtrim($LOG,&quot;\n&quot;));
+
+ob_start();
+
+echo &quot;|English|日本語|\n&quot;;
+echo &quot;| --- | --- |\n&quot;;
+
+foreach($LOG as $i=&gt;$l) {
+  echo &quot;|$LOG[$i]|$DATA[$i]|\n&quot;; 
+}
+
+$data = ob_get_contents();
+ob_end_clean();
+echo $data;
+
+$fp = popen(&quot;pbcopy&quot;,&quot;w&quot;);
+fwrite($fp, $data);
+fclose($fp);</code></pre>
+<h1 id="section-3">2015/10/06</h1>
+<h2 id="z3">Z3で関数</h2>
+<pre><code>z3 -smt2 -in
+(define-fun add ((a Int) (b Int)) Int (+ a b))
+(declare-const x Int)
+(assert (= x (add 1 2)))
+(check-sat)
+sat
+(get-value (x))
+((x 3))
+(exit)</code></pre>
+<h1 id="section-4">2015/10/05</h1>
+<h2 id="copltapl">CoPLとTAPLの式だけ見る</h2>
+<p>型理論の式をうつしてみてたのだけど、頭に入ってないので、読み慣れればって思ってる今日この頃。</p>
+<p>CoPLの型スキームの式を追っかけて理解する。<br />TAPLの参照と、例外の式だけちゃんと追っかけて意味を理解した。</p>
+<p>初めて出てきた時は特に理解が難しい。基本となる書き方を理解していれば、基本をより展開した論文を読むための基礎になるはずなので、式だけ見て大体分かるようになると良いんだろうなと思う。俺に足りなかったのはこれだなと。</p>
+<p>いうことで、最初は読むのに時間がかかる。で、忘れないうちに何度も読み直しをする事で覚えれば楽になるはず。<br />英語もきっとそうだろう。</p>
+<p>他の説明や証明も大切だけど、もっとも根幹となるものは式なのだなと。</p>
+<p>参照はOCamlのRefで、例外はJava等でもある例外と実行時エラーについての形式化だった。<br />イチイチ書くのは面倒くさいので書かないけど、頭に入れば良いんだな。</p>
+<p>でも覚えた訳じゃないので書けないw</p>
+<p>型スキームは多相的な関数の型パラメータの話を形式化したものである。<br />μとΣとσとτを使う。</p>
+<pre><code>τ ::= τ | σ.τ
+σ ::= 型スキーム
+Σ ::= 型スキームの型環境で
+
+τ | σ -&gt;</code></pre>
+<p>あれあれ？ってかんじだ。でも読める。見ながら書けばかけるけど、頭に入れたい。</p>
+<h1 id="section-5">2015/10/04</h1>
+<p>TAPLの参照周りの式だけ読んでみた。<br />参照はCoPLのオンライン演習をやって分かったつもりになってた。でもTAPLだと書き方が違うのだった。<br />形式化する際は、何もない所から定義して決めるので自由なのだよなぁ。<br />何となく読み飛ばすと全然頭に入ってない事に気がつくという事でした。</p>
+<h2 id="z3">Z3を使って遊ぼう。</h2>
+<p>refined typesではZ3が使われているのだけど、そもそもSMTソルバを使って遊んだ事がない。<br />ということで、Z3を使ってみる。<br />例を探すと、、、。</p>
+<p><a href="https://github.com/Z3Prover/z3test/tree/master/regressions/smt2">https://github.com/Z3Prover/z3test/tree/master/regressions/smt2</a></p>
+<p>この辺が良さそう。</p>
+<h3>連立方程式を解いてみる。</h3>
+<p>z3コマンドは、以下のようにするとsmt2のフォーマットで入力待ちになる。</p>
+<pre><code>$ z3 -smt2 -in</code></pre>
+<p>例えば、</p>
+<pre><code>a + b = 10
+b = 1</code></pre>
+<p>の連立方程式を解いてみよう。まず、aとbは定数なので以下のように宣言する。</p>
+<pre><code>(declare-const a Int)
+(declare-const b Int)</code></pre>
+<p>b=1の制約を書く</p>
+<pre><code>(assert (= b 1))</code></pre>
+<p>a + b = 10の制約を書く</p>
+<pre><code>(assert (= (+ a b) 10))</code></pre>
+<p>論理的に正しいかチェックする</p>
+<pre><code>(check-sat)</code></pre>
+<p>結果、satが帰って来る。</p>
+<pre><code>sat</code></pre>
+<p>aの値を取得してみる</p>
+<pre><code>(get-value (a))</code></pre>
+<p>結果は9である。</p>
+<pre><code>((a 9))</code></pre>
+<p>終了はexitである。</p>
+<pre><code>(exit)</code></pre>
+<h3>次の問題</h3>
+<p>とりあえず、連立方程式は解けた。</p>
+<pre><code>2a + 2b = 4
+5a + 5b = 10
+
+$ z3 -smt2 -in
+(declare-const a Int)
+(declare-const b Int)
+(assert (= (+ (* 2 a) (* 2 b)) 4))
+(assert (= (+ (* 5 a) (* 5 b)) 10))
+(check-sat)
+(get-value (a b))
+(exit)</code></pre>
+<p>結果</p>
+<pre><code>sat
+((a 2)
+ (b 0))</code></pre>
+<p>次の問題</p>
+<pre><code>2a + 2b = 4
+5a + 2b = 7
+
+$ z3 -smt2 -in
+(declare-const a Int)
+(declare-const b Int)
+(assert (= (+ (* 2 a) (* 2 b)) 4))
+(assert (= (+ (* 5 a) (* 2 b)) 7))
+(check-sat)
+(get-value (a b))
+(exit)</code></pre>
+<p>結果</p>
+<pre><code>sat
+((a 1)
+ (b 1))</code></pre>
+<p>いい感じに解ける。</p>
+<p>チュートリアルもあって読んでみた。</p>
+<p><a href="http://www.grammatech.com/resource/smt/SMTLIBTutorial.pdf">http://www.grammatech.com/resource/smt/SMTLIBTutorial.pdf</a></p>
+<p>これちゃんとやるとよいのだろうなと。</p>
+<h1 id="section-6">2015/10/03</h1>
+<ul>
+<li>[ ] extensive rows 2 だけのこってるのもアレなので移植しよう。<br /></li>
+<li>[ ] first class polymorphism<br /></li>
+<li>[ ] gradual typing</li>
+</ul>
+<p>土曜日だけど、今日も移植する。extensive rows2のmergeの所で引っかかって止まってたので、そこをクリアにしよう。</p>
+<h2>唐突に、操作的意味論がさらさら書けないの良くないと思う。</h2>
+<p>という事で書いてみる。</p>
+<pre><code>e ::= x | λx.e | e1 e2</code></pre>
+<p>っていうBNFが書ける。ここでxは変数で、eは式である。e1 e2 ... enも式である。<br />論文にはよくこういう記述が現れる。JavaScriptのサブセットであるMiniJavaScriptは以下のように定義出来る。</p>
+<pre><code>e ::= x | function(x) { return e; } | e1(e2)</code></pre>
+<p>これは表示的意味論では違うが、操作的意味論は同じ事が行われる。<br />JavaScriptで操作的意味論を展開してみると、</p>
+<pre><code>(function(x){return e1; })(e2) -&gt; [e2/x]e1
+e1 -&gt; e1&#39; ならば e1(e2) -&gt; e1&#39;(e2)
+e2 -&gt; e2&#39; ならば e1(e2) -&gt; e1(e2&#39;)
+e -&gt; e&#39; ならば function(x){ return e; } -&gt; function(x) { return e&#39;; }</code></pre>
+<p>ここで[e2/x]e1はe1内のxをe2に置換するという意味である。</p>
+<p>AならばBを</p>
+<pre><code>A
+----
+B</code></pre>
+<p>と書くとすると、以下のように書く事が出来る。</p>
+<pre><code>ーーーーーーーーーーーーーーーーーー
+function(x){return e1; }(e2)
+-&gt; [x/e2]e1
+
+e1 -&gt; e1&#39;
+ーーーーーーーーーーー
+e1(e2) -&gt; e1&#39;(e2)
+
+e2 -&gt; e2&#39;
+ーーーーーーーーーーー
+e1(e2) -&gt; e1(e2&#39;)
+
+e -&gt; e&#39;
+ーーーーーーーーーーーーーーーーーー
+function(x){ return e; } -&gt;
+function(x){ return e&#39;; }</code></pre>
+<p>λ計算にtrue,falseと三項演算子を追加する。</p>
+<pre><code>e ::= ... | true | false | e1 ? e2 : e3
+
+e1 -&gt; true
+ーーーーーーーーーーーー
+e1 ? e2 : e3 -&gt; e2
+
+e1 -&gt; false
+ーーーーーーーーーーーー
+e1 ? e2 : e3 -&gt; e3</code></pre>
+<p>などと思って書いてみたのだけど、書く力の前に読む力がない事に気がついたりする。<br />TAPLを何度か見てるけど、論文読むと辛過ぎる。<br />CoPLも目を通したはずだけど、見ると辛い。分からない。<br />ということで、CoPLの図だけ見ながら書いてある式を理解してみることにした。<br />ゲーム感覚で、毎日見ていれば良いんじゃないか。って訳である。<br />ということで、1回目は、２０分くらいずつで我慢の限界が来るのだけど、それを数回。難しい所は飛ばして全体に目を通してみた。<br />これ毎日やるとかなり基本が身に付く気がする。操作的意味論や型理論の式に慣れてしまえば、英語の論文も式だけ見れば大体分かるはずであるし、読む時間も短く済むはず。という事でしばらく毎日呼んでみようと思う。<br />CoPLに眼を通すのが余裕になったらTAPLに移行すれば、より高度な型理論が頭に入るはず。</p>
+<h1 id="section-7">2015/10/02</h1>
+<h2>とりあえず目標</h2>
+<ul>
+<li>[ ] first class polymorphism<br /></li>
+<li>[ ] gradual typing</li>
+</ul>
+<p>この２つを進める。<br />refined typingももうちょっと把握するとよいのかな。<br />移植すると結構満足感高いのだけど、深い理解が出来ているのかというと、それは別な話なので理解しやすくまとめたいと思う。<br />様々な、型システムの理解をより簡単にしたいけど、本当に難しいなと感じる。</p>
+<p>ずっと目指しているのは、誰にでも簡単に出来るコンパイラ作ることなのだけど、同時に最新機能は相当良いもんを積みたい。</p>
+<ul>
+<li>[ ] extensive rows 2 だけのこってるのもアレなので移植しよう。</li>
+</ul>
+<p>gradual typingは型ないJavaScriptと融合するのに向いてるのかもしれないけど、目指す言語に近い訳でもない。<br />first class polymorphismは使いたいのかもしれないので深く読むほうがよい。</p>
+<p>なんかやる気ないので、extensive rows 2をちょっと触って終わった。mergeが面倒くさい。</p>
+<h2>享保の改革の時代</h2>
+<p>どうも、この先が見えないので色々ずっと考えている。</p>
+<p>暴れん坊将軍の時代に、人口増加は止まって停滞期に入った。<br />それまでは、江戸時代が始まって人口増加してたわけだけど、限界が来た訳だ。<br />平成の時代も、今まさに人口の増加が止まったばかりだ。<br />明治維新前というよりも、今はまだ享保の改革の時代のように思える。維新を起こすには色々と課題が多過ぎる。<br />ここで、発展を目指せば、パイを争う事になるので、気持ちいいもんじゃない。経済的な発展は諦めて楽しくやる事が重要そうだ。</p>
+<p>ようやく先が分かった</p>
+<h1 id="section-8">2015/10/01</h1>
+<h2 id="first-class-polymorphism-scala">first class polymorphism をScalaに移植する</h2>
+<p>処理内容は、パースして型推論して、さらにもう１段階推論する３段構成になってます。<br />algorithm wの改造らしいのですが、変更も多いので一から作る事にしました。</p>
+<p>mlをscalaに変換してパッケージ宣言を書いて、飼い業を書き換えする等した後、<br />構文木をコンパイル後、パーサも移植しつつ、テストも移植しつつ、型推論も移植しつつとゴリゴリ進めて行って、<br />パーサのテストは通り、とりあえず、コンパイルは通りました。って一気に作業出来ました。<br />型推論のテストを通せば終わりのはずだけど、良くわからない。</p>
+<p><a href="https://github.com/hsk/type-systems-scala/tree/master/first_class_polymorphism">https://github.com/hsk/type-systems-scala/tree/master/first_class_polymorphism</a></p>
+<h2 id="gradual-typingscala">gradual typingをScalaに移植する。</h2>
+<p>first class polymorphismの移植に飽きた。ずっとハマってると辛い。<br />ということで、他のgradual typingも移植してみる。<br />gradual typingは、簡単に言うとActionScript3みたいに、動的な型システムに静的な型システムを持ち込む。<br />こちらは、algorithm wと差分が少ないようなので、差分から移植してみている。<br />とりあえず、コンパイルは通ったけど、テストは通らない。でも、大体動いた。</p>
+<p>1日に２つのプロジェクトの90%くらいの移植ができたけど、ここからが長いんだよなぁ。</p>
+<p><a href="https://github.com/hsk/type-systems-scala/tree/master/gradual_typing">https://github.com/hsk/type-systems-scala/tree/master/gradual_typing</a></p>
+<h2 id="tron">Tronについて思う事</h2>
+<p>UNIXベースを歌うのがいいと思う。</p>
+			
+		</div>
+
+</div>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="demo/js/jquery.sticky-kit.min.js"></script>
+<script src="demo/google-code-prettify/prettify.js"></script>
+<script src="demo/js/docs.js"></script>
+</body>
+</html>
