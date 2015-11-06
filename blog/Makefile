@@ -9,5 +9,5 @@ publish:
 	git add .
 	git commit -a
 	git push
-
+	open http://hsk.github.com/blog/
 
