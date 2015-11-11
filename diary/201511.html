@@ -45,10 +45,12 @@
 			</div>
 		</div>
 		<div class="col md-9 float-right">
-			<h1 id="section">2015/11/8</h1>
+			<h1 id="section">2015/11/11</h1>
+<h2 id="vm">マルチVMなランタイムを作ってます。</h2>
+<p>メモリ空間が複数あって、それを切り替えて使えるようなマシンを実装しながら作ってみています。<br />C言語だと、良い感じに作れる訳ですが、初めて作るものなのでモデルもゴチャゴチャしていてなかなか思い通りに行かず、イライラしております。<br />ま、きっと難しい事をしているんです。MS-DOSはマルチタスクではなく、Windows3.1でようやく疑似マルチタスクが実現されたわけで、簡単ではありません。<br />Amigaは真のマルチタスクを実現していましたが、それをPC上でするには数年かかり、95年にようやくWindows98が出来た訳です。<br />安定させるのに５年かかってWindows2000が出ました。スレッドはないのでWindows等のOS程複雑なものを作っている訳ではありません。<br />しかしやはり、メモリ空間を分けて管理するのは話が複雑なので簡単ではないんですよね。<br />でも、1日で出来ないようでは、駄目な気がする。ということで、気持ちが焦ってイライラしている訳でした。<br />でもようやくそれっぽく動くようになって来たのでホッとしている所であります。</p>
+<h1 id="section-1">2015/11/8</h1>
 <h2>リンク付けマシン</h2>
-<p>俺は論文に書いてあるhoge<a name="r08a1"></a><a href="#08a1">[1]</a>によるとほげだ。fuga<a name="r08a2"></a><a href="#08a2">[2]</a>によるとふがだ。<br />というリンクを書くのが大の苦手である。めんどくさい。<br />そこで、ここでリンクを付ける練習をする事にした。<br />しかし、sublime textの馬鹿野郎が俺を邪魔をする。全くけしからん奴だ。</p>
-<p>と書くと固まりやがる。俺はこれを２度も食らった。まぁいい。viで書く。<br />うーむ。かけたかな。_を描くと固まるので注意が必要みたい。</p>
+<p>俺は論文に書いてあるhoge<a name="r08a1"></a><a href="#08a1">[1]</a>によるとほげだ。fuga<a name="r08a2"></a><a href="#08a2">[2]</a>によるとふがだ。<br />というリンクを書くのが大の苦手である。めんどくさい。<br />そこで、ここでリンクを付ける練習をする事にした。<br />しかし、sublime textの馬鹿野郎が俺を邪魔をする。全くけしからん奴だ。_を書くと固まるので注意が必要である。</p>
 <p>リンクはこう書くとpandoc使った場合でも美味く行く。</p>
 <pre><code>hoge&lt;a name=&quot;r08a1&quot;&gt;&lt;/a&gt;[[1]](#08a1)
 fuga&lt;a name=&quot;r08a2&quot;&gt;&lt;/a&gt;[[2]](#08a2)
@@ -72,7 +74,7 @@ fuga&lt;a name=&quot;r08a2&quot;&gt;&lt;/a&gt;[[2]](#08a2)
 </ul>
 <h2 id="1">関数型ストリーム勉強会<a name="r08b1"></a><a href="#08b1">[1]</a>があったらしい</h2>
 <p>せっかくなので練習のためにリンクだけコピらせて貰おうと思います。</p>
-<p>とりあえず、リンクもとはメモ帳 関数型ストリーム処理勉強会<a name="r08b1"></a><a href="#08b1">[1]</a>にあります。<br />Akka Streamsについて @mtoyoshi<a name="r08b2"></a><a href="#08b2">[2]</a><br />fs2(scalaz-stream) によるDBアクセス @gakuzzzz<a name="r08b3"></a><a href="#08b3">[3]</a><br />Akka-Streamとscalaz-streamとの比較<a name="r08b4"></a><a href="#08b4">[4]</a><br />ローンパターン<a name="r08b5"></a><a href="#08b5">[5]</a><br />ストリーム処理ライブラリはなぜ必要なのか @ffu_<a name="r08b6"></a><a href="#08b6">[6]</a><br />pipesチュートリアルを読んだ話 @its_out_of_tune<a name="r08b7"></a><a href="#08b7">[7]</a><br />Pipes<a name="r08b8"></a><a href="#08b8">[8]</a><br />Arrowによるストリーム処理(主にauto使用) @as_capabl<a name="r08b9"></a><a href="#08b9">[9]</a><br />最強のライブラリを作りたくて @fumieval<a name="r08b10"></a><a href="#08b10">[10]</a> <a name="08b11"></a><a href="#08b11">[11]</a><br />非同期ストリーム処理の標準化を目指す<a name="r08b12"></a><a href="#08b12">[12]</a>のような内容があったようです。<br />よしよし、それっぽいそれっぽい。あとはなれですね。</p>
+<p>とりあえず、リンクもとはメモ帳 関数型ストリーム処理勉強会<a name="r08b1"></a><a href="#08b1">[1]</a>にあります。<br />Akka Streamsについて @mtoyoshi<a name="r08b2"></a><a href="#08b2">[2]</a><br />fs2(scalaz-stream) によるDBアクセス @gakuzzzz<a name="r08b3"></a><a href="#08b3">[3]</a><br />Akka-Streamとscalaz-streamとの比較<a name="r08b4"></a><a href="#08b4">[4]</a><br />ローンパターン<a name="r08b5"></a><a href="#08b5">[5]</a><br />ストリーム処理ライブラリはなぜ必要なのか @ffu_<a name="r08b6"></a><a href="#08b6">[6]</a><br />pipesチュートリアルを読んだ話 @its_out_of_tune<a name="r08b7"></a><a href="#08b7">[7]</a><br />Pipes<a name="r08b8"></a><a href="#08b8">[8]</a><br />Arrowによるストリーム処理(主にauto使用) @as_capabl<a name="r08b9"></a><a href="#08b9">[9]</a><br />最強のライブラリを作りたくて @fumieval<a name="r08b10"></a><a href="#08b10">[10]</a> <a name="r08b11"></a><a href="#08b11">[11]</a><br />非同期ストリーム処理の標準化を目指す<a name="r08b12"></a><a href="#08b12">[12]</a>のような内容があったようです。<br />よしよし、それっぽいそれっぽい。あとはなれですね。12個リンクを張った。Texだと楽なのになと思ったりもするのだけどまぁいいんです。<br />英語の単語調べたりした時もリンク付けて遊ぶと良いのかもしれない。習慣化が必要なので毎日慣れる事が大事だと思います。</p>
 <ul>
 <li><p><a name="08b1"></a><a href="#r08b1">[1]</a> ヾ(*ﾟｰﾟ)ｼ メモ帳 関数型ストリーム処理勉強会</p>
 <p><a href="http://shamison.hatenablog.com/entry/2015/11/07/175915">http://shamison.hatenablog.com/entry/2015/11/07/175915</a></p></li>
@@ -98,7 +100,7 @@ fuga&lt;a name=&quot;r08a2&quot;&gt;&lt;/a&gt;[[2]](#08a2)
 <li><p><a name="08b12"></a><a href="#r08b12">[12]</a> 非同期ストリーム処理の標準化を目指す &quot;Reactive Streams&quot; とは - Okapies' Archive</p>
 <p><a href="http://okapies.hateblo.jp/entry/2014/04/20/212821">http://okapies.hateblo.jp/entry/2014/04/20/212821</a></p></li>
 </ul>
-<h1 id="section-1">2015/11/7</h1>
+<h1 id="section-2">2015/11/7</h1>
 <h2 id="publish-">publish してみることに</h2>
 <p>hexoをつかってみることにしました。</p>
 <p><a href="http://hsk.github.io/blog/">http://hsk.github.io/blog/</a></p>
@@ -109,7 +111,7 @@ fuga&lt;a name=&quot;r08a2&quot;&gt;&lt;/a&gt;[[2]](#08a2)
 <h2>これから、やること。</h2>
 <p>とりあえず、docsの下も公開出来る仕組みを作る。<br />あと、言語のページも作るといいのかなと。<br />ネスト付いてるのはやっぱりfindが楽な気がするんだけど。<br />全部公開しても困るし、ブランチ作って開発ビルドしておいての、masterに移行させて欲しいらしいのでそうする。らしいって何だって感じなのだけど、まぁそのアレw</p>
 <h2>てすと</h2>
-<h1 id="section-2">2015/11/5</h1>
+<h1 id="section-3">2015/11/5</h1>
 <h2>プルリクエストをやってみる</h2>
 <p>オンライン勉強会がどうのとikegamiさんという方がgithubを使ってプルリクエスト使えば良いんじゃみたいな話をしていて、ああ、使いこなせてないなと思ってプルリクエスト使う練習等をしてみました。<br />恥ずかしいけどできたのでよかった。<br />とりあえず、upstreamからpullしてマージするといいと教えて貰っててよかった。</p>
 			
