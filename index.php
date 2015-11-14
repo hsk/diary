@@ -53,6 +53,7 @@ function view($file, $arr, $contents){
 <head>
 	<meta charset="UTF-8" >
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Cache-control" content="max-age=0, public">
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
 
 	<title>h_sakurai's diary</title>

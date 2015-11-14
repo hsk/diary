@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8" >
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Cache-control" content="max-age=0, public">
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
 
 	<title>h_sakurai's diary</title>
@@ -45,7 +46,13 @@
 			</div>
 		</div>
 		<div class="col md-9 float-right">
-			<h1 id="section">2015/11/14</h1>
+			<h1 id="section"><a name="14"></a> <a href="#14">2015/11/14</a></h1>
+<h2><a name="14-2"></a> <a href="http://hsk.github.io/diary/201511#14-2">パーマリンクを手で書くよ</a></h2>
+<p>パーマリンクを手で書くよw<br />ブログっぽくするにはやはり、パーマリンクがほしい。リンク付けマシンに俺はなる。<br />そうかんがえて、これからは手でパーマリンクを書くよ。</p>
+<pre><code># &lt;a name=&quot;14&quot;&gt;&lt;/a&gt; [2015/11/14](#14)
+
+## &lt;a name=&quot;14-2&quot;&gt;&lt;/a&gt; [パーマリンクを手で書くよ](http://hsk.github.io/diary/201511#14-2)</code></pre>
+<p>こんな風にね。リンク付けマシンである俺は喜んでリンクを手で張るのです。</p>
 <h2 id="cweb"><a name="14-1"></a> <a href="http://hsk.github.io/diary/201511#14-1">C言語でWebサーバを作ってみた</a></h2>
 <p>どうも、Erlangの素晴しい所は軽量プロセスにあるような気がして来ました。<br />GCを作ってアレコレ作っていると非常にそう感じます。<br />メモリ空間を分けて、計算して終わったらバッサリ消せば停止時間を限りなくなくして動かす事が出来るのです。<br />ErlangといえばC10k問題です。Erlangのプロセスはアクターとして通信するモデルで、非同期IOをすることが注目されていました。<br />でもErlangの本当に凄い所は、メモリの扱い方にあった気がするのです。<br />アクター毎に別のメモリ空間、そうプロセスを割り当てられ、処理が終わればメモリ領域は解放されるのです。<br />自分が考えているGCはアクターは存在しない同期関数として扱っています。<br />アクターではありません。しかし、軽量プロセスとして動かせるはず。<br />そう思ってちょいちょいっと書いたら動いてしまいました。<a name="r14a1"></a><a href="#14a1">[1]</a></p>
 <p>せっかくなので動的ローディングの機能も付けたり、面白い。<br />ああ、SML#がWebサーバ作ってたのも分かる気がする。<br />DLLとしてコンパイルして動的ロードして読み込む。<br />日付をみてリロードするというか、いまはリクエストごとに毎回ロードしてますが。<br />文字列ライブラリないので作ってみたり。<br />systemでpandocを呼び出してMarkdownをHTMLにしてみたり。<br />面白いです。</p>
@@ -53,7 +60,7 @@
 <li><p><a name="14a1"></a><a href="#r14a1">[1]</a> webサーバ</p>
 <p><a href="https://github.com/hsk/docs/tree/master/gc/simple_gc_by_c/multi_world_http_server">https://github.com/hsk/docs/tree/master/gc/simple_gc_by_c/multi_world_http_server</a></p></li>
 </ul>
-<h1 id="section-1">2015/11/11</h1>
+<h1 id="section-1"><a name="11"></a> <a href="#11">2015/11/11</a></h1>
 <h2 id="sicp"><a name="11-1"></a> <a href="http://hsk.github.io/diary/201511#11-1">SICPを訳し直したの話を見て思った事</a></h2>
 <p>SICPを訳し直した <a name="r11a1"></a><a href="#11a1">[1]</a> を見て、どーも面白くありません。夢にまで出てくる始末です。<br />なんだろうな。このイライラする気持ちはと思って色々考えてみた訳です。<br />能力高いのはいいし、言いたい事を言うのは良いんですけど、面白くない。<br />人格を否定したいってわけでもない。<br />自分もまぁ、いい加減な翻訳をやってみていたりして、ひっそりと公開していたりする訳です。<br />それが、くその山であるかのように言われている気がするのがまず面白くなかったのですが、どうもそれだけでは収まりがつきません。<br />翻訳のレベルが高いそうなので、それはよいのです。でも、話を見てると面白くない。腹立たしい。</p>
 <p>翻訳する際に、参考にしながらより良くして行ったということで参考にしているのに、人格を批判している訳ではないと言いつつあまりにも言い草が悪い。<br />それが面白くない。能力が高い人が、翻訳をすればそれはうまくできますよ。でも、そういう人ばかりがいるわけではない。</p>
@@ -76,7 +83,7 @@
 </ul>
 <h2 id="vm"><a name="11-2"></a> <a href="http://hsk.github.io/diary/201511#11-2">マルチVMなランタイムを作ってます。</a></h2>
 <p>メモリ空間が複数あって、それを切り替えて使えるようなマシンを実装しながら作ってみています。<br />C言語だと、良い感じに作れる訳ですが、初めて作るものなのでモデルもゴチャゴチャしていてなかなか思い通りに行かず、イライラしております。<br />ま、きっと難しい事をしているんです。MS-DOSはマルチタスクではなく、Windows3.1でようやく疑似マルチタスクが実現されたわけで、簡単ではありません。<br />Amigaは真のマルチタスクを実現していましたが、それをPC上でするには数年かかり、95年にようやくWindows98が出来た訳です。<br />安定させるのに５年かかってWindows2000が出ました。スレッドはないのでWindows等のOS程複雑なものを作っている訳ではありません。<br />しかしやはり、メモリ空間を分けて管理するのは話が複雑なので簡単ではないんですよね。<br />でも、1日で出来ないようでは、駄目な気がする。ということで、気持ちが焦ってイライラしている訳でした。<br />でもようやくそれっぽく動くようになって来たのでホッとしている所であります。</p>
-<h1 id="section-2">2015/11/8</h1>
+<h1 id="section-2"><a name="8"></a> <a href="#8">2015/11/8</a></h1>
 <h2><a name="8-1"></a> <a href="http://hsk.github.io/diary/201511#8-1">リンク付けマシン</a></h2>
 <p>俺は論文に書いてあるhoge<a name="r08a1"></a><a href="#08a1">[1]</a>によるとほげだ。fuga<a name="r08a2"></a><a href="#08a2">[2]</a>によるとふがだ。<br />というリンクを書くのが大の苦手である。めんどくさい。<br />そこで、ここでリンクを付ける練習をする事にした。<br />しかし、sublime textの馬鹿野郎が俺を邪魔をする。全くけしからん奴だ。_を書くと固まるので注意が必要である。</p>
 <p>リンクはこう書くとpandoc使った場合でも美味く行く。</p>
@@ -128,7 +135,7 @@ fuga&lt;a name=&quot;r08a2&quot;&gt;&lt;/a&gt;[[2]](#08a2)
 <li><p><a name="08b12"></a><a href="#r08b12">[12]</a> 非同期ストリーム処理の標準化を目指す &quot;Reactive Streams&quot; とは - Okapies' Archive</p>
 <p><a href="http://okapies.hateblo.jp/entry/2014/04/20/212821">http://okapies.hateblo.jp/entry/2014/04/20/212821</a></p></li>
 </ul>
-<h1 id="section-3">2015/11/7</h1>
+<h1 id="section-3"><a name="7"></a> <a href="#7">2015/11/7</a></h1>
 <h2 id="publish-"><a name="7-1"></a> <a href="http://hsk.github.io/diary/201511#7-1">publish してみることに</a></h2>
 <p>hexoをつかってみることにしました。</p>
 <p><a href="http://hsk.github.io/blog/">http://hsk.github.io/blog/</a></p>
@@ -139,7 +146,7 @@ fuga&lt;a name=&quot;r08a2&quot;&gt;&lt;/a&gt;[[2]](#08a2)
 <h2><a name="7-3"></a> <a href="http://hsk.github.io/diary/201511#7-3">これから、やること。</a></h2>
 <p>とりあえず、docsの下も公開出来る仕組みを作る。<br />あと、言語のページも作るといいのかなと。<br />ネスト付いてるのはやっぱりfindが楽な気がするんだけど。<br />全部公開しても困るし、ブランチ作って開発ビルドしておいての、masterに移行させて欲しいらしいのでそうする。らしいって何だって感じなのだけど、まぁそのアレw</p>
 <h2><a name="7-4"></a> <a href="http://hsk.github.io/diary/201511#7-4">てすと</a></h2>
-<h1 id="section-4">2015/11/5</h1>
+<h1 id="section-4"><a name="5"></a> <a href="#5">2015/11/5</a></h1>
 <h2><a name="5-1"></a> <a href="http://hsk.github.io/diary/201511#5-1">プルリクエストをやってみる</a></h2>
 <p>オンライン勉強会がどうのとikegamiさんという方がgithubを使ってプルリクエスト使えば良いんじゃみたいな話をしていて、ああ、使いこなせてないなと思ってプルリクエスト使う練習等をしてみました。<br />恥ずかしいけどできたのでよかった。<br />とりあえず、upstreamからpullしてマージするといいと教えて貰っててよかった。</p>
 			
