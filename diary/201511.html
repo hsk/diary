@@ -49,8 +49,8 @@
 			<h1 id="section"><a name="15"></a> <a href="#15">2015/11/15</a></h1>
 <h2><a name="15-1"></a> <a href="http://hsk.github.io/diary/201511#15-1">パッケージシステムを作ってみた</a></h2>
 <p>言語を作れば、パッケージシステムが必要になって来ます。<br />ライブラリを作る楽しさの一つはパッケージを作り公開し使ったり、使ってもらったりする事にあります。</p>
-<p>OSXのBrewは優れたパッケージシステムです。<br />これを模した単純なパッケージシステムをPHPで書いてみようと思い作ってみました。<br />なんで、PHPなんだって？C,Java系統の言語のもっとも広まっている動的なオブジェクト指向言語だからです。<br />動的ロードするには単にincludeすればよく、お手軽です。</p>
-<p>smplpkg<a name="r15-1a1"></a><a href="#15-1a1">[1]</a>はとても単純なパッケージシステムの実験です。<br />github上にphpがあり、smplpkgファイルはinstallするパッケージ名のphpを呼び出します。各PHPはパッケージのインストール情報が含まれているクラスを一つ含みます。</p>
+<p>OSXのHomebrew<a name="r15-1a1"></a><a href="#15-1a1">[1]</a>は優れたパッケージシステムです。<br />これを模した単純なパッケージシステムをPHPで書いてみようと思い作ってみました。<br />なんで、PHPなんだって？C,Java系統の言語のもっとも広まっている動的なオブジェクト指向言語だからです。<br />動的ロードするには単にincludeすればよく、お手軽です。</p>
+<p>smplpkg<a name="r15-1a2"></a><a href="#15-1a2">[2]</a>はとても単純なパッケージシステムの実験です。<br />github上にphpがあり、smplpkgファイルはinstallするパッケージ名のphpを呼び出します。各PHPはパッケージのインストール情報が含まれているクラスを一つ含みます。</p>
 <pre><code>    &lt;?php
 
     class test1 extends smplpkg {
@@ -69,7 +69,10 @@
 <p>ディレクトリを作り、そこに移動して、gitからcloneします。<br />phpを実行して初期化すると、Makefileとテスト用のPHPが出来ます。<br />makeを実行すると、依存関係を見てインストールしてくれます。<br />make cleanとすると、パッケージシステム以外のダウンロードしたファイルが消されます。<br />このあと、makeするとzipを使ってキャッシュすると速いなと実感出来ます。<br />make cleanallをすると、パッケージシステムも消されます。しかし、Makefileがあるので、makeを実行すれば、パッケージシステムがまた読み込まれます。</p>
 <p>プログラミング言語を作ったら次はライブラリ作成をすることになり、そのときにパッケージシステムがあると嬉しいですよね。<br />そんなときにこのプログラムを参考にしてもらえれば幸いです。</p>
 <ul>
-<li><p><a name="15-1a1"></a><a href="#r15-1a1">[1]</a> smplpkg</p>
+<li><p><a name="15-1a1"></a><a href="#r15-1a1">[1]</a> Homebrew</p>
+<p><a href="http://brew.sh/index_ja.html">http://brew.sh/index_ja.html</a></p>
+<p><a href="http://brew.sh/">http://brew.sh/</a></p></li>
+<li><p><a name="15-1a2"></a><a href="#r15-1a2">[2]</a> smplpkg</p>
 <p><a href="http://github.com/hsk/smplpkg/">http://github.com/hsk/smplpkg/</a></p></li>
 </ul>
 <h1 id="section-1"><a name="14"></a> <a href="#14">2015/11/14</a></h1>
