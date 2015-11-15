@@ -60,12 +60,18 @@
       var $repo = &quot;git@github.com:hsk/smplpkg_test1.git&quot;;
     }</code></pre>
 <p>リポジトリ情報や、zipファイルの場所を記述します。<br />パッケージマネージャはこのファイルをみて、依存情報を辿りインストールします。<br />結構まともに動くので楽しいです。</p>
+<p>使い方は簡単です。</p>
+<pre><code>    mkdir test
+    cd test
+    git clone git@github.com:hsk/smplpkg
+    php smplpkg/smplpkg.php init
+    make</code></pre>
+<p>ディレクトリを作り、そこに移動して、gitからcloneします。<br />phpを実行して初期化すると、Makefileとテスト用のPHPが出来ます。<br />makeを実行すると、依存関係を見てインストールしてくれます。<br />make cleanとすると、パッケージシステム以外のダウンロードしたファイルが消されます。<br />make cleanallをすると、パッケージシステムも消されます。しかし、Makefileがあるので、makeを実行すれば、パッケージシステムがまた読み込まれます。</p>
+<p>プログラミング言語を作ったら次はライブラリ作成をすることになり、そのときにパッケージシステムがあると嬉しいですよね。<br />そんなときにこのプログラムを参考にしてもらえれば幸いです。</p>
 <ul>
 <li><p><a name="15-1a1"></a><a href="#r15-1a1">[1]</a> smplpkg</p>
 <p><a href="http://github.com/hsk/smplpkg/">http://github.com/hsk/smplpkg/</a></p></li>
 </ul>
-<h3>なにわともあえれ、例を作ろう</h3>
-<p>まず、githubからcloneして持って来る。<br />次に依存しているパッケージを先に解決する。</p>
 <h1 id="section-1"><a name="14"></a> <a href="#14">2015/11/14</a></h1>
 <h2 id="atom"><a name="14-4"></a> <a href="http://hsk.github.io/diary/201511#14-4">Atom入れてみる</a></h2>
 <p>Atomの日本語対応が良くなったらしい<a name="r14-4a1"></a><a href="#14-4a1">[1]</a> ので、Atomを久々に入れてみました。<br />見たら、0.1.8.0とかなんとかの古ーいバージョンで止まっててもっさりしていたのだけど、1.2.0になっててずいぶんバージョンが上がったんだなと思う。起動も速い。<br />マークダウンのプレビューが売りでしたけど、ずいぶん良く仕上がって来てるんだなと思いました。</p>
