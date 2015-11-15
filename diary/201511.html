@@ -66,7 +66,7 @@
     git clone git@github.com:hsk/smplpkg
     php smplpkg/smplpkg.php init
     make</code></pre>
-<p>ディレクトリを作り、そこに移動して、gitからcloneします。<br />phpを実行して初期化すると、Makefileとテスト用のPHPが出来ます。<br />makeを実行すると、依存関係を見てインストールしてくれます。<br />make cleanとすると、パッケージシステム以外のダウンロードしたファイルが消されます。<br />make cleanallをすると、パッケージシステムも消されます。しかし、Makefileがあるので、makeを実行すれば、パッケージシステムがまた読み込まれます。</p>
+<p>ディレクトリを作り、そこに移動して、gitからcloneします。<br />phpを実行して初期化すると、Makefileとテスト用のPHPが出来ます。<br />makeを実行すると、依存関係を見てインストールしてくれます。<br />make cleanとすると、パッケージシステム以外のダウンロードしたファイルが消されます。<br />このあと、makeするとzipを使ってキャッシュすると速いなと実感出来ます。<br />make cleanallをすると、パッケージシステムも消されます。しかし、Makefileがあるので、makeを実行すれば、パッケージシステムがまた読み込まれます。</p>
 <p>プログラミング言語を作ったら次はライブラリ作成をすることになり、そのときにパッケージシステムがあると嬉しいですよね。<br />そんなときにこのプログラムを参考にしてもらえれば幸いです。</p>
 <ul>
 <li><p><a name="15-1a1"></a><a href="#r15-1a1">[1]</a> smplpkg</p>
