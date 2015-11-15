@@ -2,6 +2,45 @@
 
 ひっそりと日記を書きたいので、ここに書く。
 
+# <a name="15"></a> [2015/11/15](#15)
+
+## <a name="15-1"></a> [パッケージシステムを作ってみた](http://hsk.github.io/diary/201511#15-1)
+
+言語を作れば、パッケージシステムが必要になって来ます。
+ライブラリを作る楽しさの一つはパッケージを作り公開し使ったり、使ってもらったりする事にあります。
+
+OSXのBrewは優れたパッケージシステムです。
+これを模した単純なパッケージシステムをPHPで書いてみようと思い作ってみました。
+なんで、PHPなんだって？C,Java系統の言語のもっとも広まっている動的なオブジェクト指向言語だからです。
+動的ロードするには単にincludeすればよく、お手軽です。
+
+smplpkg<a name="r15-1a1"></a>[[1]](#15-1a1)はとても単純なパッケージシステムの実験です。
+github上にphpがあり、smplpkgファイルはinstallするパッケージ名のphpを呼び出します。各PHPはパッケージのインストール情報が含まれているクラスを一つ含みます。
+
+		<?php
+
+		class test1 extends smplpkg {
+		  var $zip = "https://github.com/hsk/smplpkg_test1/archive/test1-0.0.1.zip";
+		  var $comment = "this is test1 class library";
+		  var $depends = array();
+		  var $repo = "git@github.com:hsk/smplpkg_test1.git";
+		}
+
+リポジトリ情報や、zipファイルの場所を記述します。
+パッケージマネージャはこのファイルをみて、依存情報を辿りインストールします。
+結構まともに動くので楽しいです。
+
+- <a name="15-1a1"></a>[[1]](#r15-1a1) smplpkg
+
+	<http://github.com/hsk/smplpkg/>
+
+
+### なにわともあえれ、例を作ろう
+
+まず、githubからcloneして持って来る。
+次に依存しているパッケージを先に解決する。
+
+
 # <a name="14"></a> [2015/11/14](#14)
 
 ## <a name="14-4"></a> [Atom入れてみる](http://hsk.github.io/diary/201511#14-4)
