@@ -50,19 +50,19 @@
 <h2 id="tex"><a name="22-1"></a> <a href="http://hsk.github.io/diary/201511#22-1">TeXにはジレンマがあるという話</a></h2>
 <p>数式をささっとかけるようになりたいなと思い、TeX書けば良いんだよなと思いつつ、TeXを使い慣れてないので思うように書けません。それで色々弄ると、より細かい所が気になってさらにハマってました。</p>
 <h3 id="latexit">LaTeXiT</h3>
-<p>LaTeXiTっていうツールがまず便利です。ライブラリにスニペット的に様々な数式を保存しておく事が出来ます。MathJaxなどでは数式しかあつかえませんが、マクロを使う事も出来るので様々な制御が出来ます。代わりにコンパイル時間がかかるのですが、ライブラリに画像として保存する事が出来るので、一覧を見てさっと取り出して参考にする事が出来ます。ぱっとみてさっと取り出せるのが素晴しいのです。</p>
+<p>LaTeXiT<a name="r22-1a4"></a><a href="#22-1a4">[4]</a>っていうツールがまず便利です。ライブラリにスニペット的に様々な数式を保存しておく事が出来ます。MathJaxなどでは数式しかあつかえませんが、マクロを使う事も出来るので様々な制御が出来ます。代わりにコンパイル時間がかかるのですが、ライブラリに画像として保存する事が出来るので、一覧を見てさっと取り出して参考にする事が出来ます。ぱっとみてさっと取り出せるのが素晴しいのです。</p>
 <h3>記号を書く</h3>
 <p>まず、TeXでは記号を書くのに最初慣れません。よく使う記号をスニペットとして取り出せるようにしましょう。これで安心です。</p>
 <h3>証明図を書くパッケージ</h3>
-<p>さて、LaTeXiTによって世界は広がりました。数式書くには様々な命令があります。<br />証明図をかくにも、分数を使ったり、他に様々なパッケージが複数存在します。<br />龍田先生のproof.sty やbussproof.styがあります。<br />これらを使いこなすのに結構な時間がかかります。</p>
+<p>さて、LaTeXiTによって世界は広がりました。数式書くには様々な命令があります。<br />証明図をかくにも、分数を使ったり、他に様々なパッケージが複数存在します。<br />龍田先生のproof.sty <a name="r22-1a2"></a><a href="#22-1a2">[2]</a> やbussproof.sty <a name="r22-1a3"></a><a href="#22-1a3">[3]</a>があります。<br />これらを使いこなすのに結構な時間がかかります。</p>
 <h3>スタイルを弄りたい</h3>
 <p>数式が書けたら、枠や色を付けたりマージンを調整したくなります。<br />ここが曲者です。HTMLのテーブルレイアウトやCSSのようなスタイル指定でささっとかえる事が出来そうで出来ません。様々な便利マクロがあるにもかかわらず、思うように行かないのです。</p>
 <h3>他を探すが見つからない</h3>
 <p>TeX使い辛いと思う人は沢山いて代わりを探すとこれというものがありません。<br />じゃあ自分で作ってやろうという人もいて作られていますが、どうもTeXより遅いとか、完全じゃないとか不満があるように思えます。</p>
 <h3 id="htmlcjavascript">HTMLやC++、JavaScriptを考える</h3>
-<p>HTMLの世界を考えてみましょう。HTMLはTeXより後発のもので、組版を意識していません。段組やページの概念がありません。それ故に高速に動作します。テーブルレイアウトやCSSのスタイルシートによって、位置調整も楽に出来ます。JavaScriptはHTML上のマクロ言語のようなものでプログラムで様々な事を実現出来ます。CSSファイルは便利で色々な人が作って奇麗な見た目を静的に実現出来ます。よりたくさんのJavaScriptやCSSが乱立し、ブラウザの種類が増えて行き、何処でもしっかり動くものが必要になりました。jquery.jsやbootstrap.cssは標準的で便利なライブラリとして提供されています。</p>
-<p>C++にはstlがあるけどやっぱり駄目だboostのようなライブラリが必要そうだという感じです。</p>
-<p>TeXにはパッケージシステムもないようです。npmのようなパッケージマネージャがあればもっと便利になるでしょう。</p>
+<p>HTMLの世界を考えてみましょう。HTMLはTeXより後発のもので、組版を意識していません。段組やページの概念がありません。それ故に高速に動作します。テーブルレイアウトやCSSのスタイルシートによって、位置調整も楽に出来ます。JavaScriptはHTML上のマクロ言語のようなものでプログラムで様々な事を実現出来ます。CSSファイルは便利で色々な人が作って奇麗な見た目を静的に実現出来ます。よりたくさんのJavaScriptやCSSが乱立し、ブラウザの種類が増えて行き、何処でもしっかり動くものが必要になりました。JQuery<a name="r22-1a6"></a><a href="#22-1a6">[6]</a>は標準的なJavaScriptライブラリとして提供され、Bootstrap<a name="r22-1a5"></a><a href="#22-1a5">[5]</a>は標準的なCSSとして提供されています。</p>
+<p>C++にはSTL<a name="r22-1a7"></a><a href="#22-1a7">[7]</a>があるけどやっぱり駄目だBoost<a name="r22-1a8"></a><a href="#22-1a8">[8]</a>のようなライブラリが必要そうだという感じです。</p>
+<p>TeXには便利なパッケージシステムは無さそうです。npm<a name="r22-1a9"></a><a href="#22-1a9">[9]</a>のようなパッケージマネージャがあればもっと便利になるでしょう。追記: tlmgr - TeX Live package manager<a name="r22-1a1"></a><a href="#22-1a1">[1]</a> TeX Liveのパッケージマネージャはありました。</p>
 <h3 id="boostbooststrapnpm">boost、booststrap、npm的な物が欲しいのでは？</h3>
 <p>TeXの世界ではまだJavaScriptやCSSファイルが複数あるだけみたいな状況ではないでしょうか。HTMLより歴史が古い故に、位置指定などが不便です。</p>
 <p>TeXの世界でもそのような便利なCSSのような存在はあります。article,book,jarticle,jbook等がそれです。しかし、まだ不便です。うう。</p>
@@ -74,6 +74,29 @@
 <h3>とにかく書いてノウハウを貯めよう</h3>
 <p>重要なのはドンドン書いて慣れてしまう事です。徐々に使い慣れて行けばいいのです。<br />不満だったポイントはノウハウを貯めておき後で便利なライブラリを作るヒントとして残して置きましょう。そうすれば、自分が出来なくても将来他の誰かがそのノウハウを使って便利なライブラリを作ってくれるかもしれません。自分が作って有名になれたら良いじゃないですか！そういう事を夢見ながら、とにかく使い慣れてしまえば別に気にならなくなるかもしれませんよ。</p>
 <p>逆に考えると、苦労してマージンを付ける事で、より細かく文章に気を配る事になるでしょう。そう、書き慣れる事と、細かな気配りが重要なのです。<br />とはいえ、めんどくさい事をすると、他に気を配る気力が萎えますよね。<br />今はやる気がなくても、めんどくささを超えた自分はきっと良い文章を書きますよ。<br />という事で、あとでリンク貼るw</p>
+<ul>
+<li><p><a name="22-1a1"></a><a href="#r22-1a1">[1]</a> <a href="https://www.google.co.jp/search?q=tlmgr">tlmgr</a> - TeX Live package manager</p>
+<p><a href="https://www.tug.org/texlive/tlmgr.html">https://www.tug.org/texlive/tlmgr.html</a></p></li>
+<li><p><a name="22-1a2"></a><a href="#r22-1a2">[2]</a> <a href="https://www.google.co.jp/search?q=proof.sty">proof.sty</a></p>
+<p><a href="http://research.nii.ac.jp/~tatsuta/proof-sty.html">http://research.nii.ac.jp/~tatsuta/proof-sty.html</a></p>
+<p><a href="http://swimath2.hatenablog.com/entry/2013/12/06/013552">http://swimath2.hatenablog.com/entry/2013/12/06/013552</a></p>
+<p><a href="http://d.hatena.ne.jp/eagletmt/20120111/1326251578">http://d.hatena.ne.jp/eagletmt/20120111/1326251578</a></p></li>
+<li><p><a name="22-1a3"></a><a href="#r22-1a3">[3]</a> <a href="https://www.google.co.jp/search?q=bussproof.sty">bussproof.sty</a></p>
+<p><a href="https://math.ucsd.edu/~sbuss/ResearchWeb/bussproofs/">https://math.ucsd.edu/~sbuss/ResearchWeb/bussproofs/</a></p>
+<p><a href="http://kreisel.fam.cx/webmaster/clog/2011-05-05-1.html">http://kreisel.fam.cx/webmaster/clog/2011-05-05-1.html</a></p></li>
+<li><p><a name="22-1a4"></a><a href="#r22-1a4">[4]</a> <a href="https://www.google.co.jp/search?q=LaTeXiT">LaTeXiT</a></p>
+<p><a href="http://www.chachatelier.fr/latexit/">http://www.chachatelier.fr/latexit/</a></p></li>
+<li><p><a name="22-1a5"></a><a href="#r22-1a5">[5]</a> <a href="https://www.google.co.jp/search?q=Bootstrap">Bootstrap</a></p>
+<p><a href="http://getbootstrap.com/">http://getbootstrap.com/</a></p></li>
+<li><p><a name="22-1a6"></a><a href="#r22-1a6">[6]</a> <a href="https://www.google.co.jp/search?q=JQuery">JQuery</a></p>
+<p><a href="https://jquery.com/">https://jquery.com/</a></p></li>
+<li><p><a name="22-1a7"></a><a href="#r22-1a7">[7]</a> <a href="https://www.google.co.jp/search?q=STL">STL</a></p>
+<p><a href="https://ja.wikipedia.org/wiki/Standard_Template_Library">https://ja.wikipedia.org/wiki/Standard_Template_Library</a></p></li>
+<li><p><a name="22-1a8"></a><a href="#r22-1a8">[8]</a> <a href="https://www.google.co.jp/search?q=Boost">Boost</a></p>
+<p><a href="http://www.boost.org/">http://www.boost.org/</a></p></li>
+<li><p><a name="22-1a9"></a><a href="#r22-1a9">[9]</a> <a href="https://www.google.co.jp/search?q=npm">npm</a></p>
+<p><a href="https://www.npmjs.com/">https://www.npmjs.com/</a></p></li>
+</ul>
 <h1 id="section-1"><a name="15"></a> <a href="#15">2015/11/15</a></h1>
 <h2><a name="15-1"></a> <a href="http://hsk.github.io/diary/201511#15-1">パッケージシステムを作ってみた</a></h2>
 <p>言語を作れば、パッケージシステムが必要になって来ます。<br />ライブラリを作る楽しさの一つはパッケージを作り公開し使ったり、使ってもらったりする事にあります。</p>
