@@ -50,7 +50,7 @@
 <h2 id="tex"><a name="22-1"></a> <a href="http://hsk.github.io/diary/201511#22-1">TeXにはジレンマがあるという話</a></h2>
 <p>数式をささっとかけるようになりたいなと思い、TeX書けば良いんだよなと思いつつ、TeXを使い慣れてないので思うように書けません。それで色々弄ると、より細かい所が気になってさらにハマってました。</p>
 <h3 id="latexit">LaTeXiT</h3>
-<p>LaTeXiT<a name="r22-1a4"></a><a href="#22-1a4">[4]</a>っていうツールがまず便利です。ライブラリにスニペット的に様々な数式を保存しておく事が出来ます。MathJaxなどでは数式しかあつかえませんが、マクロを使う事も出来るので様々な制御が出来ます。代わりにコンパイル時間がかかるのですが、ライブラリに画像として保存する事が出来るので、一覧を見てさっと取り出して参考にする事が出来ます。ぱっとみてさっと取り出せるのが素晴しいのです。</p>
+<p>LaTeXiT<a name="r22-1a4"></a><a href="#22-1a4">[4]</a>っていうツールがまず便利です。ライブラリにスニペット的に様々な数式を保存しておく事が出来ます。MathJax<a name="r22-1a10"></a><a href="#22-1a10">[10]</a>などでは数式しかあつかえませんが、マクロを使う事も出来るので様々な制御が出来ます。代わりにコンパイル時間がかかるのですが、ライブラリに画像として保存する事が出来るので、一覧を見てさっと取り出して参考にする事が出来ます。ぱっとみてさっと取り出せるのが素晴しいのです。</p>
 <h3>記号を書く</h3>
 <p>まず、TeXでは記号を書くのに最初慣れません。よく使う記号をスニペットとして取り出せるようにしましょう。これで安心です。</p>
 <h3>証明図を書くパッケージ</h3>
@@ -63,6 +63,57 @@
 <p>HTMLの世界を考えてみましょう。HTMLはTeXより後発のもので、組版を意識していません。段組やページの概念がありません。それ故に高速に動作します。テーブルレイアウトやCSSのスタイルシートによって、位置調整も楽に出来ます。JavaScriptはHTML上のマクロ言語のようなものでプログラムで様々な事を実現出来ます。CSSファイルは便利で色々な人が作って奇麗な見た目を静的に実現出来ます。よりたくさんのJavaScriptやCSSが乱立し、ブラウザの種類が増えて行き、何処でもしっかり動くものが必要になりました。JQuery<a name="r22-1a6"></a><a href="#22-1a6">[6]</a>は標準的なJavaScriptライブラリとして提供され、Bootstrap<a name="r22-1a5"></a><a href="#22-1a5">[5]</a>は標準的なCSSとして提供されています。</p>
 <p>C++にはSTL<a name="r22-1a7"></a><a href="#22-1a7">[7]</a>があるけどやっぱり駄目だBoost<a name="r22-1a8"></a><a href="#22-1a8">[8]</a>のようなライブラリが必要そうだという感じです。</p>
 <p>TeXには便利なパッケージシステムは無さそうです。npm<a name="r22-1a9"></a><a href="#22-1a9">[9]</a>のようなパッケージマネージャがあればもっと便利になるでしょう。追記: tlmgr - TeX Live package manager<a name="r22-1a1"></a><a href="#22-1a1">[1]</a> TeX Liveのパッケージマネージャはありました。</p>
+<p>Mac TeXだと、TeX Live Utilityを使うとGUI操作で間違いないのか。すっかり忘れていますw</p>
+<p>TeX Liveユーティリティを使うと、インストール済みのパッケージを検索して、マニュアルをpdfでみれて、texのソースもあって超便利ですね。<br />便利だ。</p>
+<pre><code>$ tlmgr update --self</code></pre>
+<p>list は重かったりするので、txtに保存しておくといいかも。</p>
+<pre><code>$ tlmgr list &gt; tlmgr_list.txt
+
+$ cat tlmgr_list.txt | grep proof</code></pre>
+<p>で</p>
+<pre><code>i bussproofs: Proof trees in the style of the sequent calculus.
+  calculation: Typesetting reasoned calculations, also called calculational proofs.
+  cryptocode: Typesetting pseudocode, protocols, game-based proofs and black-box reductions in cryptography.
+  ebproof: Formal proofs in the style of sequent calculus.
+i fntproof: A programmable font test pattern generator.
+i lkproof: LK Proof figure macros.
+  logicproof: Box proofs for propositional and predicate logic.
+i lplfitch: Fitch-style natural deduction proofs.
+i natded: Typeset natural deduction proofs.
+  prftree: Macros for building proof trees
+  proofread: Commands for inserting annotations
+i ribbonproofs: Drawing ribbon proofs.
+i synproof: Easy drawing of syntactic proofs.
+i tex-ewd: Macros to typeset calculational proofs and programs in Dijkstra&#39;s style.</code></pre>
+<p>のように書けば検索したり出来る。iが付いているのがインストール済みのようなので、</p>
+<pre><code>$ tlmgr install prftree
+tlmgr: package repository ftp://ftp.kddilabs.jp/CTAN/systems/texlive/tlnet
+[1/1, ??:??/??:??] install: prftree [288k]
+tlmgr: package log updated: /usr/local/texlive/2013/texmf-var/web2c/tlmgr.log
+running mktexlsr ...
+done running mktexlsr.
+running mtxrun --generate ...
+done running mtxrun --generate.</code></pre>
+<p>でインストールして</p>
+<pre><code>$ tlmgr info prftree
+tlmgr: package repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet
+package:     prftree
+category:    Package
+shortdesc:   Macros for building proof trees
+longdesc:    A package to typeset proof trees for natural deduction calculi, sequent-like calculi, and similar.
+installed:   Yes
+revision:    38757
+sizes:       doc: 337k, run: 45k
+relocatable: No
+cat-version: 1.2
+cat-date:    2015-11-01 17:45:39 +0100
+cat-license: gpl
+cat-topics:  tree maths proof
+cat-related: proofs
+collection:  collection-mathextra</code></pre>
+<p>で見れて、</p>
+<pre><code>$ tlmgr uninstall prftree</code></pre>
+<p>ってやったら、tex liveがアンインストールされた！tlmgrもない！うっ！仕方ないので再インストールうおお。<br />そして無料で使わせてもらって言うのもなんなのですが、重い。TeXのパッケージシステムは重い。でも最初だけ。インストールする時だけ。ってわけでもない。ctanってあるし、cpanのtexバージョンなんですね。（汗<br />再度インストールした後も、やっぱ消すかと聞かれたので、そういうものなのかな？謎です。<br />TeXにはちゃんとしたパッケージシステムがありました。<br />ctanって読んだほうが良いような。</p>
 <h3 id="boostbooststrapnpm">boost、booststrap、npm的な物が欲しいのでは？</h3>
 <p>TeXの世界ではまだJavaScriptやCSSファイルが複数あるだけみたいな状況ではないでしょうか。HTMLより歴史が古い故に、位置指定などが不便です。</p>
 <p>TeXの世界でもそのような便利なCSSのような存在はあります。article,book,jarticle,jbook等がそれです。しかし、まだ不便です。うう。</p>
@@ -70,10 +121,10 @@
 <p>TeXはしっかりと動作するけど使い安いものではありません。<br />しかし、代わりのソリューションも、boostのような便利なライブラリもありません。<br />じゃあ作ろうかと思ってみても、自分にそれほどノウハウはありません。<br />TeXは不便ですが、しっかりと動作するので、スタンダードです。<br />ここにジレンマがあります。</p>
 <h3>葛藤を見つけたら諦めて、慣れよう</h3>
 <p>ジレンマがあるとき人の心の中では葛藤をどうにかしてその問題を解決しようとします。<br />しかし、葛藤があるときは問題は簡単に解決出来ないものです。<br />だから葛藤に気がついたら諦めるのが肝心なのです。</p>
-<p>とりあえず、今はboostのようなものはない時代なので使い勝手の悪さは諦めましょう。<br />不便でも使えるので慣れれてしまえば良いのです。<br />TeXはデファクトスタンダードで、数式を奇麗に書く事が出来る素晴しいものなのです。</p>
+<p>とりあえず、今はBoostのようなものはない時代なので使い勝手の悪さは諦めましょう。<br />不便でも使えるので慣れれてしまえば良いのです。<br />TeXはデファクトスタンダードで、数式を奇麗に書く事が出来る素晴しいものなのです。</p>
 <h3>とにかく書いてノウハウを貯めよう</h3>
 <p>重要なのはドンドン書いて慣れてしまう事です。徐々に使い慣れて行けばいいのです。<br />不満だったポイントはノウハウを貯めておき後で便利なライブラリを作るヒントとして残して置きましょう。そうすれば、自分が出来なくても将来他の誰かがそのノウハウを使って便利なライブラリを作ってくれるかもしれません。自分が作って有名になれたら良いじゃないですか！そういう事を夢見ながら、とにかく使い慣れてしまえば別に気にならなくなるかもしれませんよ。</p>
-<p>逆に考えると、苦労してマージンを付ける事で、より細かく文章に気を配る事になるでしょう。そう、書き慣れる事と、細かな気配りが重要なのです。<br />とはいえ、めんどくさい事をすると、他に気を配る気力が萎えますよね。<br />今はやる気がなくても、めんどくささを超えた自分はきっと良い文章を書きますよ。<br />という事で、あとでリンク貼るw</p>
+<p>逆に考えると、苦労してマージンを付ける事で、より細かく文章に気を配る事になるでしょう。そう、書き慣れる事と、細かな気配りが重要なのです。<br />とはいえ、めんどくさい事をすると、他に気を配る気力が萎えますよね。<br />今はやる気がなくても、めんどくささを超えた自分はきっと良い文章を書きますよ。</p>
 <ul>
 <li><p><a name="22-1a1"></a><a href="#r22-1a1">[1]</a> <a href="https://www.google.co.jp/search?q=tlmgr">tlmgr</a> - TeX Live package manager</p>
 <p><a href="https://www.tug.org/texlive/tlmgr.html">https://www.tug.org/texlive/tlmgr.html</a></p></li>
@@ -96,6 +147,8 @@
 <p><a href="http://www.boost.org/">http://www.boost.org/</a></p></li>
 <li><p><a name="22-1a9"></a><a href="#r22-1a9">[9]</a> <a href="https://www.google.co.jp/search?q=npm">npm</a></p>
 <p><a href="https://www.npmjs.com/">https://www.npmjs.com/</a></p></li>
+<li><p><a name="22-1a10"></a><a href="#r22-1a10">[10]</a> <a href="https://www.google.co.jp/search?q=MathJax">MathJax</a></p>
+<p><a href="https://www.mathjax.org/">https://www.mathjax.org/</a></p></li>
 </ul>
 <h1 id="section-1"><a name="15"></a> <a href="#15">2015/11/15</a></h1>
 <h2><a name="15-1"></a> <a href="http://hsk.github.io/diary/201511#15-1">パッケージシステムを作ってみた</a></h2>

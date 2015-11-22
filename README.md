@@ -10,7 +10,7 @@
 
 ### LaTeXiT
 
-LaTeXiT<a name="r22-1a4"></a>[[4]](#22-1a4)っていうツールがまず便利です。ライブラリにスニペット的に様々な数式を保存しておく事が出来ます。MathJaxなどでは数式しかあつかえませんが、マクロを使う事も出来るので様々な制御が出来ます。代わりにコンパイル時間がかかるのですが、ライブラリに画像として保存する事が出来るので、一覧を見てさっと取り出して参考にする事が出来ます。ぱっとみてさっと取り出せるのが素晴しいのです。
+LaTeXiT<a name="r22-1a4"></a>[[4]](#22-1a4)っていうツールがまず便利です。ライブラリにスニペット的に様々な数式を保存しておく事が出来ます。MathJax<a name="r22-1a10"></a>[[10]](#22-1a10)などでは数式しかあつかえませんが、マクロを使う事も出来るので様々な制御が出来ます。代わりにコンパイル時間がかかるのですが、ライブラリに画像として保存する事が出来るので、一覧を見てさっと取り出して参考にする事が出来ます。ぱっとみてさっと取り出せるのが素晴しいのです。
 
 ### 記号を書く
 
@@ -41,6 +41,77 @@ C++にはSTL<a name="r22-1a7"></a>[[7]](#22-1a7)があるけどやっぱり駄�
 
 TeXには便利なパッケージシステムは無さそうです。npm<a name="r22-1a9"></a>[[9]](#22-1a9)のようなパッケージマネージャがあればもっと便利になるでしょう。追記: tlmgr - TeX Live package manager<a name="r22-1a1"></a>[[1]](#22-1a1) TeX Liveのパッケージマネージャはありました。
 
+Mac TeXだと、TeX Live Utilityを使うとGUI操作で間違いないのか。すっかり忘れていますw
+
+TeX Liveユーティリティを使うと、インストール済みのパッケージを検索して、マニュアルをpdfでみれて、texのソースもあって超便利ですね。
+便利だ。
+
+	$ tlmgr update --self
+
+list は重かったりするので、txtに保存しておくといいかも。
+
+	$ tlmgr list > tlmgr_list.txt
+
+	$ cat tlmgr_list.txt | grep proof
+
+で
+
+	i bussproofs: Proof trees in the style of the sequent calculus.
+	  calculation: Typesetting reasoned calculations, also called calculational proofs.
+	  cryptocode: Typesetting pseudocode, protocols, game-based proofs and black-box reductions in cryptography.
+	  ebproof: Formal proofs in the style of sequent calculus.
+	i fntproof: A programmable font test pattern generator.
+	i lkproof: LK Proof figure macros.
+	  logicproof: Box proofs for propositional and predicate logic.
+	i lplfitch: Fitch-style natural deduction proofs.
+	i natded: Typeset natural deduction proofs.
+	  prftree: Macros for building proof trees
+	  proofread: Commands for inserting annotations
+	i ribbonproofs: Drawing ribbon proofs.
+	i synproof: Easy drawing of syntactic proofs.
+	i tex-ewd: Macros to typeset calculational proofs and programs in Dijkstra's style.
+
+のように書けば検索したり出来る。iが付いているのがインストール済みのようなので、
+
+	$ tlmgr install prftree
+	tlmgr: package repository ftp://ftp.kddilabs.jp/CTAN/systems/texlive/tlnet
+	[1/1, ??:??/??:??] install: prftree [288k]
+	tlmgr: package log updated: /usr/local/texlive/2013/texmf-var/web2c/tlmgr.log
+	running mktexlsr ...
+	done running mktexlsr.
+	running mtxrun --generate ...
+	done running mtxrun --generate.
+
+でインストールして
+
+	$ tlmgr info prftree
+	tlmgr: package repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet
+	package:     prftree
+	category:    Package
+	shortdesc:   Macros for building proof trees
+	longdesc:    A package to typeset proof trees for natural deduction calculi, sequent-like calculi, and similar.
+	installed:   Yes
+	revision:    38757
+	sizes:       doc: 337k, run: 45k
+	relocatable: No
+	cat-version: 1.2
+	cat-date:    2015-11-01 17:45:39 +0100
+	cat-license: gpl
+	cat-topics:  tree maths proof
+	cat-related: proofs
+	collection:  collection-mathextra
+
+で見れて、
+
+	$ tlmgr uninstall prftree
+
+ってやったら、tex liveがアンインストールされた！tlmgrもない！うっ！仕方ないので再インストールうおお。
+そして無料で使わせてもらって言うのもなんなのですが、重い。TeXのパッケージシステムは重い。でも最初だけ。インストールする時だけ。ってわけでもない。ctanってあるし、cpanのtexバージョンなんですね。（汗
+再度インストールした後も、やっぱ消すかと聞かれたので、そういうものなのかな？謎です。
+TeXにはちゃんとしたパッケージシステムがありました。
+ctanって読んだほうが良いような。
+
+
 ### boost、booststrap、npm的な物が欲しいのでは？
 
 TeXの世界ではまだJavaScriptやCSSファイルが複数あるだけみたいな状況ではないでしょうか。HTMLより歴史が古い故に、位置指定などが不便です。
@@ -61,7 +132,7 @@ TeXは不便ですが、しっかりと動作するので、スタンダード�
 しかし、葛藤があるときは問題は簡単に解決出来ないものです。
 だから葛藤に気がついたら諦めるのが肝心なのです。
 
-とりあえず、今はboostのようなものはない時代なので使い勝手の悪さは諦めましょう。
+とりあえず、今はBoostのようなものはない時代なので使い勝手の悪さは諦めましょう。
 不便でも使えるので慣れれてしまえば良いのです。
 TeXはデファクトスタンダードで、数式を奇麗に書く事が出来る素晴しいものなのです。
 
@@ -73,7 +144,6 @@ TeXはデファクトスタンダードで、数式を奇麗に書く事が出�
 逆に考えると、苦労してマージンを付ける事で、より細かく文章に気を配る事になるでしょう。そう、書き慣れる事と、細かな気配りが重要なのです。
 とはいえ、めんどくさい事をすると、他に気を配る気力が萎えますよね。
 今はやる気がなくても、めんどくささを超えた自分はきっと良い文章を書きますよ。
-という事で、あとでリンク貼るw
 
 - <a name="22-1a1"></a>[[1]](#r22-1a1) [tlmgr](https://www.google.co.jp/search?q=tlmgr) - TeX Live package manager
 
@@ -116,6 +186,10 @@ TeXはデファクトスタンダードで、数式を奇麗に書く事が出�
 - <a name="22-1a9"></a>[[9]](#r22-1a9) [npm](https://www.google.co.jp/search?q=npm)
 
 	https://www.npmjs.com/
+
+- <a name="22-1a10"></a>[[10]](#r22-1a10) [MathJax](https://www.google.co.jp/search?q=MathJax)
+
+	https://www.mathjax.org/
 
 # <a name="15"></a> [2015/11/15](#15)
 
